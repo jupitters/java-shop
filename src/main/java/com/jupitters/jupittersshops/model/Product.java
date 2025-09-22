@@ -24,6 +24,8 @@ public class Product {
     private BigDecimal price;
     private int inventory;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_id")
     private Category category;
 
     @OneToMany(mappedBy = "produtc", cascade = CascadeType.ALL, orphanRemoval = true)
