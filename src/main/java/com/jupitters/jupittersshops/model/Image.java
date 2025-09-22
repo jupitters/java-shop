@@ -1,5 +1,13 @@
 package com.jupitters.jupittersshops.model;
 
-public class Image {
+import java.sql.Blob;
 
+public class Image {
+    private Long id;
+    private String fileName;
+    private String fileType;
+    private Blob image;
+    private String downloadUrl;
+
+    private Product product;
 }
