@@ -1,10 +1,17 @@
 package com.jupitters.jupittersshops.service.product;
 
+import com.jupitters.jupittersshops.exceptions.ProductNotFoundException;
 import com.jupitters.jupittersshops.model.Product;
+import com.jupitters.jupittersshops.repository.ProductRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
+@RequiredArgsConstructor
 public class ProductService implements IProductService{
+    private ProductRepository productRepository;
 
     @Override
     public Product addProduct(Product product) {
@@ -18,7 +25,8 @@ public class ProductService implements IProductService{
 
     @Override
     public Product getProductById(Long id) {
-        return null;
+        return productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("Product not found!"));
     }
 
     @Override
