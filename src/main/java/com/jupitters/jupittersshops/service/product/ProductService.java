@@ -20,7 +20,7 @@ public class ProductService implements IProductService{
 
     @Override
     public List<Product> getAllProducts() {
-        return List.of();
+        return productRepository.findAll();
     }
 
     @Override
@@ -43,7 +43,7 @@ public class ProductService implements IProductService{
 
     @Override
     public List<Product> getProductByCategory(String category) {
-        return List.of();
+        return productRepository.findByCategoryName(category);
     }
 
     @Override
