@@ -24,12 +24,11 @@ public class ProductService implements IProductService{
         return new Product(
                 request.getName(),
                 request.getBrand(),
+                request.getDescription(),
                 request.getPrice(),
                 request.getInventory(),
-                request.getDescription(),
-                request.getBrand(),
                 request.getCategory()
-        )
+        );
     }
 
     @Override

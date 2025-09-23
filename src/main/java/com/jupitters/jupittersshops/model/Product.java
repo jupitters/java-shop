@@ -1,7 +1,6 @@
 package com.jupitters.jupittersshops.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,7 +11,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Product {
     @Id
@@ -22,7 +20,7 @@ public class Product {
     private String brand;
     private String description;
     private BigDecimal price;
-    private int inventory;
+    private Integer inventory;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
@@ -31,7 +29,7 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Image> images;
 
-    public Product(String name, String brand, String description, BigDecimal price, int inventory, Category category) {
+    public Product(String name, String brand, String description, BigDecimal price, Integer inventory, Category category) {
         this.name = name;
         this.brand = brand;
         this.description = description;
