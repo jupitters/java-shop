@@ -1,11 +1,12 @@
 package com.jupitters.jupittersshops.service.product;
 
 import com.jupitters.jupittersshops.model.Product;
+import com.jupitters.jupittersshops.request.AddProductRequest;
 
 import java.util.List;
 
 public interface IProductService {
-    Product addProduct(Product product);
+    Product addProduct(AddProductRequest product);
     List<Product> getAllProducts();
     Product getProductById(Long id);
     void deleteProductById(Long id);

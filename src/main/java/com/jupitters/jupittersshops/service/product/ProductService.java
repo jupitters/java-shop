@@ -3,6 +3,7 @@ package com.jupitters.jupittersshops.service.product;
 import com.jupitters.jupittersshops.exceptions.ProductNotFoundException;
 import com.jupitters.jupittersshops.model.Product;
 import com.jupitters.jupittersshops.repository.ProductRepository;
+import com.jupitters.jupittersshops.request.AddProductRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +12,10 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ProductService implements IProductService{
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
     @Override
-    public Product addProduct(Product product) {
+    public Product addProduct(AddProductRequest product) {
         return null;
     }
 
@@ -68,6 +69,6 @@ public class ProductService implements IProductService{
 
     @Override
     public Long countProductsByBrandAndName(String brand, String name) {
-        return 0L;
+        return productRepository.countByBrandAndName(brand, name);
     }
 }
