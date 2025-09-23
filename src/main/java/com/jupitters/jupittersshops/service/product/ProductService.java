@@ -1,6 +1,7 @@
 package com.jupitters.jupittersshops.service.product;
 
 import com.jupitters.jupittersshops.exceptions.ProductNotFoundException;
+import com.jupitters.jupittersshops.model.Category;
 import com.jupitters.jupittersshops.model.Product;
 import com.jupitters.jupittersshops.repository.ProductRepository;
 import com.jupitters.jupittersshops.request.AddProductRequest;
@@ -15,8 +16,20 @@ public class ProductService implements IProductService{
     private final ProductRepository productRepository;
 
     @Override
-    public Product addProduct(AddProductRequest product) {
+    public Product addProduct(AddProductRequest request) {
         return null;
+    }
+
+    private Product createProduct(AddProductRequest request, Category category) {
+        return new Product(
+                request.getName(),
+                request.getBrand(),
+                request.getPrice(),
+                request.getInventory(),
+                request.getDescription(),
+                request.getBrand(),
+                request.getCategory()
+        )
     }
 
     @Override
