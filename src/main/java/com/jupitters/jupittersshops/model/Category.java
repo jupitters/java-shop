@@ -11,7 +11,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Category {
     @Id
@@ -21,4 +20,6 @@ public class Category {
 
     @OneToMany(mappedBy = "category")
     private List<Product> products;
+
+
 }

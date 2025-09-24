@@ -3,21 +3,30 @@ package com.jupitters.jupittersshops.service.product;
 import com.jupitters.jupittersshops.exceptions.ProductNotFoundException;
 import com.jupitters.jupittersshops.model.Category;
 import com.jupitters.jupittersshops.model.Product;
+import com.jupitters.jupittersshops.repository.CategoryRepository;
 import com.jupitters.jupittersshops.repository.ProductRepository;
 import com.jupitters.jupittersshops.request.AddProductRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ProductService implements IProductService{
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
 
     @Override
     public Product addProduct(AddProductRequest request) {
-        return null;
+        Category category = Optional.ofNullable(categoryRepository.findByName(request.getCategory().getName()))
+                .orElseGet(() -> {
+                    Category newCategory = new Category(request.getCategory().getName());
+                    return categoryRepository.save(newCategory);
+                });
+        request.setCategory(category);
+        return productRepository.save(createProduct(request, category));
     }
 
     private Product createProduct(AddProductRequest request, Category category) {
