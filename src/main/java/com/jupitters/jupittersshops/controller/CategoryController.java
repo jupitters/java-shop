@@ -5,14 +5,14 @@ import com.jupitters.jupittersshops.model.Category;
 import com.jupitters.jupittersshops.response.ApiResponse;
 import com.jupitters.jupittersshops.service.category.ICategoryService;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.CONFLICT;
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -38,6 +38,16 @@ public class CategoryController {
             return ResponseEntity.ok(new ApiResponse("Added!", newCategory));
         } catch (AlreadyExistsException e) {
             return ResponseEntity.status(CONFLICT)
+                    .body(new ApiResponse(e.getMessage(), null));
+        }
+    }
+
+    public ResponseEntity<ApiResponse> getCategoryById(@PathVariable Long categoryId){
+        try {
+            Category category = categoryService.getCategoryById(categoryId);
+            return ResponseEntity.ok(new ApiResponse("Success!", category));
+        } catch (Exception e) {
+            return ResponseEntity.status(NOT_FOUND)
                     .body(new ApiResponse(e.getMessage(), null));
         }
     }
