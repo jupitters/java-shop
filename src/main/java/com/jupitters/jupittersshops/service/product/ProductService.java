@@ -37,7 +37,7 @@ public class ProductService implements IProductService{
                 request.getDescription(),
                 request.getPrice(),
                 request.getInventory(),
-                request.getCategory()
+                category
         );
     }
 
