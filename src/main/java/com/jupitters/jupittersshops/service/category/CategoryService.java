@@ -1,5 +1,6 @@
 package com.jupitters.jupittersshops.service.category;
 
+import com.jupitters.jupittersshops.exceptions.AlreadyExistsException;
 import com.jupitters.jupittersshops.exceptions.ResourceNotFoundException;
 import com.jupitters.jupittersshops.model.Category;
 import com.jupitters.jupittersshops.repository.CategoryRepository;
@@ -34,7 +35,9 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public Category addCategory(Category category) {
-        return null;
+        return Optional.of(category).filter(c -> !categoryRepository.existsByName(c.getName()))
+                .map(categoryRepository :: save)
+                .orElseThrow(() -> new AlreadyExistsException(category.getName()));
     }
 
     @Override
