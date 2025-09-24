@@ -1,14 +1,22 @@
 package com.jupitters.jupittersshops.service.category;
 
+import com.jupitters.jupittersshops.exceptions.ResourceNotFoundException;
 import com.jupitters.jupittersshops.model.Category;
+import com.jupitters.jupittersshops.repository.CategoryRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public class CategoryService extends ICategoryService {
+@Service
+@RequiredArgsConstructor
+public class CategoryService implements ICategoryService {
+    private final CategoryRepository categoryRepository;
 
     @Override
     public Category getCategoryById(Long id) {
-        return null;
+        return categoryRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found!"));
     }
 
     @Override
