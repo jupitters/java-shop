@@ -6,6 +6,7 @@ import com.jupitters.jupittersshops.model.Product;
 import com.jupitters.jupittersshops.repository.CategoryRepository;
 import com.jupitters.jupittersshops.repository.ProductRepository;
 import com.jupitters.jupittersshops.request.AddProductRequest;
+import com.jupitters.jupittersshops.request.ProductUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -59,8 +60,21 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public void updateProduct(Product product, Long productId) {
+    public Product updateProduct(ProductUpdateRequest product, Long productId) {
 
+    }
+
+    private Product updateExistingProduct(Product existingProduct, ProductUpdateRequest request) {
+        existingProduct.setName(request.getName());
+        existingProduct.setBrand(request.getBrand());
+        existingProduct.setPrice(request.getPrice());
+        existingProduct.setInventory(request.getInventory());
+        existingProduct.setDescription(request.getDescription());
+
+        Category category = categoryRepository.findByName(request.getCategory().getName());
+        existingProduct.setCategory(category);
+
+        return existingProduct;
     }
 
     @Override
