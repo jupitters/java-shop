@@ -1,6 +1,7 @@
 package com.jupitters.jupittersshops.controller;
 
 import com.jupitters.jupittersshops.exceptions.AlreadyExistsException;
+import com.jupitters.jupittersshops.exceptions.ResourceNotFoundException;
 import com.jupitters.jupittersshops.model.Category;
 import com.jupitters.jupittersshops.response.ApiResponse;
 import com.jupitters.jupittersshops.service.category.ICategoryService;
@@ -42,11 +43,12 @@ public class CategoryController {
         }
     }
 
+    @GetMapping("/{categoryId}")
     public ResponseEntity<ApiResponse> getCategoryById(@PathVariable Long categoryId){
         try {
             Category category = categoryService.getCategoryById(categoryId);
             return ResponseEntity.ok(new ApiResponse("Success!", category));
-        } catch (Exception e) {
+        } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(NOT_FOUND)
                     .body(new ApiResponse(e.getMessage(), null));
         }
