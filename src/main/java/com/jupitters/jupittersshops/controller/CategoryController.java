@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,5 +32,14 @@ public class CategoryController {
         }
     }
 
+    public ResponseEntity<ApiResponse> addCategory(@RequestBody Category category) {
+        try {
+            Category newCategory = categoryService.addCategory(category);
+            return ResponseEntity.ok(new ApiResponse("Added!", newCategory));
+        } catch (Exception e) {
+            return ResponseEntity.status(INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse("Error!",  INTERNAL_SERVER_ERROR));
+        }
+    }
 
 }
