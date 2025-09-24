@@ -76,5 +76,15 @@ public class CategoryController {
         }
     }
 
+    @PutMapping("/id/{categoryId}")
+    public ResponseEntity<ApiResponse> updateCategory(@RequestBody Category category, @PathVariable Long categoryId){
+        try {
+            Category updatedCategory = categoryService.updateCategory(category, categoryId);
+            return ResponseEntity.ok(new ApiResponse("Updated!", updatedCategory));
+        } catch (ResourceNotFoundException e){
+            return ResponseEntity.status(NOT_FOUND)
+                    .body(new ApiResponse(e.getMessage(), null));
+        }
+    }
 
 }
