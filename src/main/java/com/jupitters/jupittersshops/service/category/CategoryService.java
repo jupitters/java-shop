@@ -3,6 +3,7 @@ package com.jupitters.jupittersshops.service.category;
 import com.jupitters.jupittersshops.exceptions.ResourceNotFoundException;
 import com.jupitters.jupittersshops.model.Category;
 import com.jupitters.jupittersshops.repository.CategoryRepository;
+import com.jupitters.jupittersshops.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoryService implements ICategoryService {
     private final CategoryRepository categoryRepository;
+    private final ProductRepository productRepository;
 
     @Override
     public Category getCategoryById(Long id) {
@@ -21,12 +23,12 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public Category getCategoryByName(String name) {
-        return null;
+        return categoryRepository.findByName(name);
     }
 
     @Override
     public List<Category> getAllCategories() {
-        return List.of();
+        return categoryRepository.findAll();
     }
 
     @Override
@@ -41,6 +43,8 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public void deleteCategory(Long id) {
-
+        categoryRepository.findById(id)
+                .ifPresentOrElse(categoryRepository::delete,
+                        ()-> {throw new ResourceNotFoundException("Category not found!");});
     }
 }
