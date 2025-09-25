@@ -43,15 +43,16 @@ public class ProductController {
         }
     }
 
-     public ResponseEntity<ApiResponse> addProduct(@RequestBody AddProductRequest product){
-        try {
+    @PostMapping("/add")
+    public ResponseEntity<ApiResponse> addProduct(@RequestBody AddProductRequest product){
+    try {
             Product newProduct = productService.addProduct(product);
             return ResponseEntity.ok(new ApiResponse("Added!", newProduct));
         } catch (Exception e) {
             return ResponseEntity.status(INTERNAL_SERVER_ERROR)
                     .body(new ApiResponse(e.getMessage(), null));
         }
-     }
+    }
 
      @DeleteMapping("/id/{productId}")
      public ResponseEntity<ApiResponse> deleteProduct(@PathVariable Long productId){
