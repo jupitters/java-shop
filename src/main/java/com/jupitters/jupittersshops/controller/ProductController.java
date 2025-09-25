@@ -81,9 +81,13 @@ public class ProductController {
      public ResponseEntity<ApiResponse> getProductByCategory(@PathVariable String productName) {
         try {
             List<Product> products = productService.getProductsByName(productName);
+            if (products.isEmpty()){
+                return ResponseEntity.status(NOT_FOUND)
+                        .body(new ApiResponse("No products found", productName));
+            }
             return ResponseEntity.ok(new ApiResponse("Found!", products));
         } catch (Exception e) {
-            return ResponseEntity.status(NOT_FOUND)
+            return ResponseEntity.status(INTERNAL_SERVER_ERROR)
                     .body(new ApiResponse(e.getMessage(), null));
         }
      }
