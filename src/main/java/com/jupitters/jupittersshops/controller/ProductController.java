@@ -153,5 +153,7 @@ public class ProductController {
         }
      }
 
+     public ResponseEntity<ApiResponse> countProductsByBrandAndName(@RequestParam String brandName, @RequestParam String productName) {}
+
 
 }
