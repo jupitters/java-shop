@@ -78,7 +78,7 @@ public class ProductController {
      }
 
      @GetMapping("/name/{productName}")
-     public ResponseEntity<ApiResponse> getProductByCategory(String productName) {
+     public ResponseEntity<ApiResponse> getProductByCategory(@PathVariable String productName) {
         try {
             List<Product> products = productService.getProductsByName(productName);
             return ResponseEntity.ok(new ApiResponse("Found!", products));
