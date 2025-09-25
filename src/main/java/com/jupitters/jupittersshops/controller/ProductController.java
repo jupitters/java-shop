@@ -7,6 +7,7 @@ import com.jupitters.jupittersshops.request.ProductUpdateRequest;
 import com.jupitters.jupittersshops.response.ApiResponse;
 import com.jupitters.jupittersshops.service.product.IProductService;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -99,6 +100,21 @@ public class ProductController {
             if (products.isEmpty()){
                 return ResponseEntity.status(NOT_FOUND)
                         .body(new ApiResponse("Products not found", null));
+            }
+            return ResponseEntity.ok(new ApiResponse("Found!", products));
+        } catch (Exception e) {
+            return ResponseEntity.status(INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse(e.getMessage(), null));
+        }
+     }
+
+     @GetMapping("/c/{categoryName}/b/{brandName}")
+     public ResponseEntity<ApiResponse> getProductByCategoryAndBrand(@PathVariable String categoryName, @PathVariable String brandName) {
+        try{
+            List<Product> products = productService.getProductByCategoryAndBrand(categoryName, brandName);
+            if (products.isEmpty()) {
+                return ResponseEntity.status(NOT_FOUND)
+                        .body(new ApiResponse("Products not found!", null));
             }
             return ResponseEntity.ok(new ApiResponse("Found!", products));
         } catch (Exception e) {
