@@ -43,7 +43,7 @@ public class ProductController {
         }
     }
 
-     public ResponseEntity<ApiResponse> addProduct(@RequestBody Product product){
+     public ResponseEntity<ApiResponse> addProduct(@RequestBody AddProductRequest product){
         try {
             Product newProduct = productService.addProduct(product);
             return ResponseEntity.ok(new ApiResponse("Added!", newProduct));
