@@ -3,6 +3,7 @@ package com.jupitters.jupittersshops.controller;
 import com.jupitters.jupittersshops.exceptions.ResourceNotFoundException;
 import com.jupitters.jupittersshops.model.Product;
 import com.jupitters.jupittersshops.request.AddProductRequest;
+import com.jupitters.jupittersshops.request.ProductUpdateRequest;
 import com.jupitters.jupittersshops.response.ApiResponse;
 import com.jupitters.jupittersshops.service.product.IProductService;
 import lombok.RequiredArgsConstructor;
@@ -63,5 +64,16 @@ public class ProductController {
              return ResponseEntity.status(NOT_FOUND)
                      .body(new ApiResponse(e.getMessage(), null));
          }
+     }
+
+     public ResponseEntity<ApiResponse> updateProduct(@RequestBody Product product, @PathVariable Long productId) {
+        try {
+            Product updatedProduct = productService.updateProduct(product, productId);
+            return ResponseEntity.ok(new ApiResponse("Success!", updatedProduct));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(NOT_FOUND)
+                    .body(new ApiResponse(e.getMessage(), null));
+        }
+
      }
 }
