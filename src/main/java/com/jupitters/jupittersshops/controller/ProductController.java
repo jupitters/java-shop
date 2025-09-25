@@ -77,8 +77,23 @@ public class ProductController {
         }
      }
 
+     @GetMapping("/category/{categoryName}")
+     public ResponseEntity<ApiResponse> getProductByCategory(@PathVariable String categoryName){
+        try {
+            List<Product> products = productService.getProductByCategory(categoryName);
+            if (products.isEmpty()){
+                return ResponseEntity.status(NOT_FOUND)
+                        .body(new ApiResponse("No products found", null));
+            }
+            return ResponseEntity.ok(new ApiResponse("Found!", products));
+        } catch (Exception e) {
+            return ResponseEntity.status(INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse(e.getMessage(), null));
+        }
+     }
+
      @GetMapping("/name/{productName}")
-     public ResponseEntity<ApiResponse> getProductByCategory(@PathVariable String productName) {
+     public ResponseEntity<ApiResponse> getProductByName(@PathVariable String productName) {
         try {
             List<Product> products = productService.getProductsByName(productName);
             if (products.isEmpty()){
