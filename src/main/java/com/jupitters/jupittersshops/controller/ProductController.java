@@ -92,6 +92,20 @@ public class ProductController {
         }
      }
 
+     public ResponseEntity<ApiResponse> getProductByBrand(@PathVariable String brandName) {
+        try {
+            List<Product> products = productService.getProductByBrand(brandName);
+            if (products.isEmpty()){
+                return ResponseEntity.status(NOT_FOUND)
+                        .body(new ApiResponse("Products not found", null));
+            }
+            return ResponseEntity.ok(new ApiResponse("Found!", products));
+        } catch (Exception e) {
+            return ResponseEntity.status(INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse(e.getMessage(), null));
+        }
+     }
+
      @GetMapping("/name/{productName}")
      public ResponseEntity<ApiResponse> getProductByName(@PathVariable String productName) {
         try {
