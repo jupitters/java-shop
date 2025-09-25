@@ -66,7 +66,7 @@ public class ProductController {
          }
      }
 
-     public ResponseEntity<ApiResponse> updateProduct(@RequestBody Product product, @PathVariable Long productId) {
+     public ResponseEntity<ApiResponse> updateProduct(@RequestBody ProductUpdateRequest product, @PathVariable Long productId) {
         try {
             Product updatedProduct = productService.updateProduct(product, productId);
             return ResponseEntity.ok(new ApiResponse("Success!", updatedProduct));
