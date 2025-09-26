@@ -153,6 +153,7 @@ public class ProductController {
         }
      }
 
+     @GetMapping("/count/b/n/")
      public ResponseEntity<ApiResponse> countProductsByBrandAndName(@RequestParam String brandName, @RequestParam String productName) {
         try {
             var productCount = productService.countProductsByBrandAndName(brandName, productName);
