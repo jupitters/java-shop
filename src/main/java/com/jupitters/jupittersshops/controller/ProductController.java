@@ -67,16 +67,6 @@ public class ProductController {
          }
      }
 
-     @PutMapping("/id/{productId}")
-     public ResponseEntity<ApiResponse> updateProduct(@RequestBody ProductUpdateRequest product, @PathVariable Long productId) {
-        try {
-            Product updatedProduct = productService.updateProduct(product, productId);
-            return ResponseEntity.ok(new ApiResponse("Success!", updatedProduct));
-        } catch (ResourceNotFoundException e) {
-            return ResponseEntity.status(NOT_FOUND)
-                    .body(new ApiResponse(e.getMessage(), null));
-        }
-     }
 
      @GetMapping("/category/{categoryName}")
      public ResponseEntity<ApiResponse> getProductByCategory(@PathVariable String categoryName){
