@@ -34,7 +34,16 @@ public class ProductController {
         }
     }
 
-
+    @GetMapping("/id/{productId}")
+    public ResponseEntity<ApiResponse> getProductById(@PathVariable Long productId) {
+        try {
+            Product product = productService.getProductById(productId);
+            return ResponseEntity.ok(new ApiResponse("Found!", product));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(NOT_FOUND)
+                    .body(new ApiResponse(e.getMessage(), null));
+        }
+    }
 
     @PostMapping("/add")
     public ResponseEntity<ApiResponse> addProduct(@RequestBody AddProductRequest product){
