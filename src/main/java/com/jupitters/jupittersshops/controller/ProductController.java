@@ -56,16 +56,7 @@ public class ProductController {
         }
     }
 
-     @DeleteMapping("/id/{productId}")
-     public ResponseEntity<ApiResponse> deleteProduct(@PathVariable Long productId){
-         try {
-             productService.deleteProductById(productId);
-             return ResponseEntity.ok(new ApiResponse("Deleted", null));
-         } catch (ResourceNotFoundException e) {
-             return ResponseEntity.status(NOT_FOUND)
-                     .body(new ApiResponse(e.getMessage(), null));
-         }
-     }
+
 
      @PutMapping("/id/{productId}")
      public ResponseEntity<ApiResponse> updateProduct(@RequestBody ProductUpdateRequest product, @PathVariable Long productId) {
