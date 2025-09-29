@@ -18,8 +18,8 @@ public class CartService implements ICartService{
         Cart cart = cartRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cart not found!"));
         BigDecimal totalAamount = cart.getTotalAmount();
-
-        return cart;
+        cart.setTotalAmount(totalAamount);
+        return cartRepository.save(cart);
     }
 
     @Override
