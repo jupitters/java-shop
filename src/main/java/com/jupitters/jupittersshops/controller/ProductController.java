@@ -138,20 +138,7 @@ public class ProductController {
         }
      }
 
-     @GetMapping("/b/{brandName}/n/{productName}")
-     public ResponseEntity<ApiResponse> getProductByBrandAndName(@RequestParam String brandName, @RequestParam String productName) {
-        try{
-            List<Product> products = productService.getProductsByBrandAndName(brandName, productName);
-            if (products.isEmpty()){
-                return ResponseEntity.status(NOT_FOUND)
-                        .body(new ApiResponse("Products not found!", null));
-            }
-            return ResponseEntity.ok(new ApiResponse("Found!", products));
-        } catch (Exception e) {
-            return ResponseEntity.status(INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse(e.getMessage(), null));
-        }
-     }
+
 
      @GetMapping("/count/b/n/")
      public ResponseEntity<ApiResponse> countProductsByBrandAndName(@RequestParam String brandName, @RequestParam String productName) {
