@@ -32,16 +32,7 @@ public class CategoryController {
         }
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<ApiResponse> addCategory(@RequestBody Category category) {
-        try {
-            Category newCategory = categoryService.addCategory(category);
-            return ResponseEntity.ok(new ApiResponse("Added!", newCategory));
-        } catch (AlreadyExistsException e) {
-            return ResponseEntity.status(CONFLICT)
-                    .body(new ApiResponse(e.getMessage(), null));
-        }
-    }
+
 
     @GetMapping("/id/{categoryId}")
     public ResponseEntity<ApiResponse> getCategoryById(@PathVariable Long categoryId){
