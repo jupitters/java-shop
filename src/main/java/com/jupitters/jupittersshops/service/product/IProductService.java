@@ -1,5 +1,6 @@
 package com.jupitters.jupittersshops.service.product;
 
+import com.jupitters.jupittersshops.dto.ProductDto;
 import com.jupitters.jupittersshops.model.Product;
 import com.jupitters.jupittersshops.request.AddProductRequest;
 import com.jupitters.jupittersshops.request.ProductUpdateRequest;
@@ -20,4 +21,7 @@ public interface IProductService {
     Long countProductsByBrandAndName(String brand, String name);
 
 
+    List<ProductDto> getConvertedProducts(List<Product> products);
+
+    ProductDto convertToDto(Product product);
 }

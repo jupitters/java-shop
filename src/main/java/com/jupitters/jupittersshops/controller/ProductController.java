@@ -1,5 +1,6 @@
 package com.jupitters.jupittersshops.controller;
 
+import com.jupitters.jupittersshops.dto.ProductDto;
 import com.jupitters.jupittersshops.exceptions.ResourceNotFoundException;
 import com.jupitters.jupittersshops.model.Product;
 import com.jupitters.jupittersshops.request.AddProductRequest;
@@ -27,7 +28,8 @@ public class ProductController {
     public ResponseEntity<ApiResponse> getAllProducts() {
         try {
             List<Product> products = productService.getAllProducts();
-            return ResponseEntity.ok(new ApiResponse("Success", products));
+            List<ProductDto> convertedProducts = productService.getConvertedProducts(products);
+            return ResponseEntity.ok(new ApiResponse("Success", convertedProducts));
         } catch (Exception e) {
             return ResponseEntity.status(INTERNAL_SERVER_ERROR)
                     .body(new ApiResponse(e.getMessage(), INTERNAL_SERVER_ERROR));
