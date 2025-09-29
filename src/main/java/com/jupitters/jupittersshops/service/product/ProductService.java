@@ -1,9 +1,13 @@
 package com.jupitters.jupittersshops.service.product;
 
+import com.jupitters.jupittersshops.dto.ImageDto;
+import com.jupitters.jupittersshops.dto.ProductDto;
 import com.jupitters.jupittersshops.exceptions.ProductNotFoundException;
 import com.jupitters.jupittersshops.model.Category;
+import com.jupitters.jupittersshops.model.Image;
 import com.jupitters.jupittersshops.model.Product;
 import com.jupitters.jupittersshops.repository.CategoryRepository;
+import com.jupitters.jupittersshops.repository.ImageRepository;
 import com.jupitters.jupittersshops.repository.ProductRepository;
 import com.jupitters.jupittersshops.request.AddProductRequest;
 import com.jupitters.jupittersshops.request.ProductUpdateRequest;
@@ -20,6 +24,7 @@ public class ProductService implements IProductService{
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final ModelMapper modelMapper;
+    private final ImageRepository imageRepository;
 
     @Override
     public Product addProduct(AddProductRequest request) {
@@ -110,5 +115,15 @@ public class ProductService implements IProductService{
     @Override
     public Long countProductsByBrandAndName(String brand, String name) {
         return productRepository.countByBrandAndName(brand, name);
+    }
+
+    public ProductDto convertToDto(Product product){
+        ProductDto productDto = modelMapper.map(product, ProductDto.class);
+        List<Image> images = imageRepository.findByProductId(product.getId());
+        List<ImageDto> imageDtos = images.stream()
+                .map(image -> modelMapper.map(image, ImageDto.class))
+                .toList();
+        productDto.setImages(imageDtos);
+        return productDto;
     }
 }
