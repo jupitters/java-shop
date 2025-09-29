@@ -40,7 +40,9 @@ public class ProductController {
     public ResponseEntity<ApiResponse> getProductById(@PathVariable Long productId) {
         try {
             Product product = productService.getProductById(productId);
-            return ResponseEntity.ok(new ApiResponse("Found!", product));
+            ProductDto productDto = productService.convertToDto(product);
+
+            return ResponseEntity.ok(new ApiResponse("Found!", productDto));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(NOT_FOUND)
                     .body(new ApiResponse(e.getMessage(), null));
@@ -114,11 +116,12 @@ public class ProductController {
      public ResponseEntity<ApiResponse> getProductByCategoryAndBrand(@PathVariable String categoryName, @PathVariable String brandName) {
         try{
             List<Product> products = productService.getProductByCategoryAndBrand(categoryName, brandName);
+            List<ProductDto> productDtos = productService.getConvertedProducts(products);
             if (products.isEmpty()) {
                 return ResponseEntity.status(NOT_FOUND)
                         .body(new ApiResponse("Products not found!", null));
             }
-            return ResponseEntity.ok(new ApiResponse("Found!", products));
+            return ResponseEntity.ok(new ApiResponse("Found!", productDtos));
         } catch (Exception e) {
             return ResponseEntity.status(INTERNAL_SERVER_ERROR)
                     .body(new ApiResponse(e.getMessage(), null));
