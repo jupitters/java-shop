@@ -2,6 +2,7 @@ package com.jupitters.jupittersshops.service.cart;
 
 import com.jupitters.jupittersshops.exceptions.ResourceNotFoundException;
 import com.jupitters.jupittersshops.model.Cart;
+import com.jupitters.jupittersshops.model.CartItem;
 import com.jupitters.jupittersshops.repository.CartItemRepository;
 import com.jupitters.jupittersshops.repository.CartRepository;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,10 @@ public class CartService implements ICartService{
 
     @Override
     public BigDecimal getTotalPrice(Long id) {
-        return null;
+        Cart cart = getCart(id);
+        return cart.getItems()
+                .stream()
+                .map(CartItem::getTotalPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }
