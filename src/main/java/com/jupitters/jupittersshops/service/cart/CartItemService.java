@@ -10,6 +10,8 @@ import com.jupitters.jupittersshops.service.product.IProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 @AllArgsConstructor
 public class CartItemService implements ICartItemService{
@@ -59,6 +61,19 @@ public class CartItemService implements ICartItemService{
 
     @Override
     public void updateItemQuantity(Long cartId, Long productId, Integer quantity) {
+        Cart cart = cartService.getCart(cartId);
+        cart.getItems()
+                .stream()
+                .filter(item -> item.getProduct().getId().equals(productId))
+                .findFirst()
+                .ifPresent(item -> {
+                    item.setQuantity(quantity);
+                    item.setUnitPrice(item.getProduct().getPrice());
+                    item.setTotalPrice();
+                });
+        BigDecimal totalAmount = cart.getTotalAmount();
+        cart.setTotalAmount(totalAmount);
+        cartRepository.save(cart);
 
     }
 }
