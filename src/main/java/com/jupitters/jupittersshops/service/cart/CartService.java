@@ -2,6 +2,7 @@ package com.jupitters.jupittersshops.service.cart;
 
 import com.jupitters.jupittersshops.exceptions.ResourceNotFoundException;
 import com.jupitters.jupittersshops.model.Cart;
+import com.jupitters.jupittersshops.repository.CartItemRepository;
 import com.jupitters.jupittersshops.repository.CartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import java.math.BigDecimal;
 @RequiredArgsConstructor
 public class CartService implements ICartService{
     private final CartRepository cartRepository;
+    private final CartItemRepository cartItemRepository;
 
     @Override
     public Cart getCart(Long id) {
@@ -24,6 +26,7 @@ public class CartService implements ICartService{
 
     @Override
     public void clearCart(Long id) {
+        Cart cart = getCart(id);
 
     }
 
