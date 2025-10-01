@@ -38,7 +38,7 @@ public class CartController {
 
     public ResponseEntity<ApiResponse> getTotalAmount(@PathVariable Long cartId) {
         BigDecimal totalAmount = cartService.getTotalPrice(cartId);
-        return ResponseEntity.ok(new ApiResponse("Success!", totalAmount));
+        return ResponseEntity.ok(new ApiResponse("Total price: ", totalAmount));
     }
 
 }
