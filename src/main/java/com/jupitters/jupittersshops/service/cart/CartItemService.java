@@ -67,13 +67,5 @@ public class CartItemService implements ICartItemService{
 
     }
 
-    @Override
-    public CartItem getCartItem(Long cartId, Long productId) {
-        Cart cart = cartService.getCart(cartId);
-        return cart.getItems()
-                .stream()
-                .filter(item -> item.getProduct().getId().equals(productId))
-                .findFirst()
-                .orElseThrow(() -> new ResourceNotFoundException("Item not found!"));
-    }
+
 }
