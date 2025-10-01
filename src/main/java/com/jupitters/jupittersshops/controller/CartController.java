@@ -36,6 +36,10 @@ public class CartController {
         return ResponseEntity.ok(new ApiResponse("Clear cart success!", null));
     }
 
-
+    @GetMapping("/id/total/{cartId}")
+    public ResponseEntity<ApiResponse> getTotalAmount(@PathVariable Long cartId) {
+        BigDecimal totalAmount = cartService.getTotalPrice(cartId);
+        return ResponseEntity.ok(new ApiResponse("Total price: ", totalAmount));
+    }
 
 }
