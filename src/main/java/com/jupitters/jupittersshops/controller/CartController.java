@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RequiredArgsConstructor
@@ -34,6 +36,9 @@ public class CartController {
         return ResponseEntity.ok(new ApiResponse("Clear cart success!", null));
     }
 
-
+    public ResponseEntity<ApiResponse> getTotalAmount(@PathVariable Long cartId) {
+        BigDecimal totalAmount = cartService.getTotalPrice(cartId);
+        return ResponseEntity.ok(new ApiResponse("Success!", totalAmount));
+    }
 
 }
