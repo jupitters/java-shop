@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 
@@ -41,5 +43,13 @@ public class CartItemController {
             return ResponseEntity.status(NOT_FOUND)
                     .body(new ApiResponse(e.getMessage(), null));
         }
+    }
+
+    public ResponseEntity<ApiResponse> updateItemQuantity(@PathVariable Long cartId,
+                                                          @PathVariable Long productId,
+                                                          @RequestParam Integer quantity){
+        cartItemService.updateItemQuantity(cartId, productId, quantity);
+        return ResponseEntity.ok(new ApiResponse("Updated successfully!", null));
+
     }
 }
