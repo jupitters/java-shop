@@ -4,6 +4,7 @@ import com.jupitters.jupittersshops.exceptions.ResourceNotFoundException;
 import com.jupitters.jupittersshops.model.Cart;
 import com.jupitters.jupittersshops.repository.CartItemRepository;
 import com.jupitters.jupittersshops.repository.CartRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,13 +27,7 @@ public class CartService implements ICartService{
         return cartRepository.save(cart);
     }
 
-    @Override
-    public void clearCart(Long id) {
-        Cart cart = getCart(id);
-        cartItemRepository.deleteAllByCartId(id);
-        cart.getItems().clear();
-        cartRepository.deleteById(id);
-    }
+
 
     @Override
     public BigDecimal getTotalPrice(Long id) {
