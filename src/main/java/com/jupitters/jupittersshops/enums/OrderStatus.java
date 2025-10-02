@@ -1,4 +1,9 @@
 package com.jupitters.jupittersshops.enums;
 
-public class OrderStatus {
+public enum OrderStatus {
+    PENDING,
+    PROCESSING,
+    SHIPPED,
+    DELIVERED,
+    CANCELED
 }
