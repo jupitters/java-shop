@@ -5,6 +5,7 @@ import com.jupitters.jupittersshops.model.Cart;
 import com.jupitters.jupittersshops.model.CartItem;
 import com.jupitters.jupittersshops.response.ApiResponse;
 import com.jupitters.jupittersshops.service.cart.ICartItemService;
+import com.jupitters.jupittersshops.service.cart.ICartService;
 import jakarta.persistence.PostRemove;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +20,17 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @RestController
 @RequestMapping("${api.prefix}/")
 public class CartItemController {
-    private ICartItemService cartItemService;
+    private final ICartItemService cartItemService;
+    private final ICartService cartService;
 
     @PostMapping("/item/add")
     public ResponseEntity<ApiResponse> addItemToCart(@RequestParam Long cartId,
                                                      @RequestParam Long itemId,
                                                      @RequestParam Integer quantity){
         try {
+            if (cartId == null) {
+                cartId = cartService.initializeNewCart();
+            }
             cartItemService.addItemToCart(cartId, itemId, quantity);
             return ResponseEntity.ok(new ApiResponse("Added successfull!", null));
         } catch (ResourceNotFoundException e) {

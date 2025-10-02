@@ -2,7 +2,6 @@ package com.jupitters.jupittersshops.service.cart;
 
 import com.jupitters.jupittersshops.exceptions.ResourceNotFoundException;
 import com.jupitters.jupittersshops.model.Cart;
-import com.jupitters.jupittersshops.model.CartItem;
 import com.jupitters.jupittersshops.repository.CartItemRepository;
 import com.jupitters.jupittersshops.repository.CartRepository;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +40,7 @@ public class CartService implements ICartService{
         return cart.getTotalAmount();
     }
 
+    @Override
     public Long initializeNewCart() {
         Cart newCart = new Cart();
         Long newCartId = cartIdgenerator.getAndIncrement();
