@@ -5,8 +5,10 @@ import com.jupitters.jupittersshops.model.Cart;
 import com.jupitters.jupittersshops.model.CartItem;
 import com.jupitters.jupittersshops.response.ApiResponse;
 import com.jupitters.jupittersshops.service.cart.ICartItemService;
+import jakarta.persistence.PostRemove;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +22,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public class CartItemController {
     private ICartItemService cartItemService;
 
+    @PostMapping("/item/add")
     public ResponseEntity<ApiResponse> addItemToCart(@RequestParam Long cartId,
                                                      @RequestParam Long productId,
                                                      @RequestParam Integer quantity){
@@ -30,5 +33,10 @@ public class CartItemController {
             return ResponseEntity.status(NOT_FOUND)
                     .body(new ApiResponse(e.getMessage(), null));
         }
+    }
+
+    public ResponseEntity<ApiResponse> removeItemFromCart(Long cartId, Long productId) {
+        cartItemService.removeItemFromCart(cartId, productId);
+        return ResponseEntity.ok(new ApiResponse("Removed successfully!", null));
     }
 }
