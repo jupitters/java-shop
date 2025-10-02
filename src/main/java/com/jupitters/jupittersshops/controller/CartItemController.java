@@ -36,7 +36,12 @@ public class CartItemController {
     }
 
     public ResponseEntity<ApiResponse> removeItemFromCart(Long cartId, Long productId) {
-        cartItemService.removeItemFromCart(cartId, productId);
-        return ResponseEntity.ok(new ApiResponse("Removed successfully!", null));
+        try {
+            cartItemService.removeItemFromCart(cartId, productId);
+            return ResponseEntity.ok(new ApiResponse("Removed successfully!", null));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(NOT_FOUND)
+                    .body(new ApiResponse(e.getMessage(), null));
+        }
     }
 }
