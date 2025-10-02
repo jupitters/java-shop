@@ -23,10 +23,10 @@ public class CartItemController {
 
     @PostMapping("/item/add")
     public ResponseEntity<ApiResponse> addItemToCart(@RequestParam Long cartId,
-                                                     @RequestParam Long productId,
+                                                     @RequestParam Long itemId,
                                                      @RequestParam Integer quantity){
         try {
-            cartItemService.addItemToCart(cartId, productId, quantity);
+            cartItemService.addItemToCart(cartId, itemId, quantity);
             return ResponseEntity.ok(new ApiResponse("Added successfull!", null));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(NOT_FOUND)
@@ -34,10 +34,10 @@ public class CartItemController {
         }
     }
 
-    @DeleteMapping("/c/{cartId}/i/{productId}/remove")
-    public ResponseEntity<ApiResponse> removeItemFromCart(@PathVariable Long cartId, @PathVariable Long productId) {
+    @DeleteMapping("/c/{cartId}/i/{itemId}/remove")
+    public ResponseEntity<ApiResponse> removeItemFromCart(@PathVariable Long cartId, @PathVariable Long itemId) {
         try {
-            cartItemService.removeItemFromCart(cartId, productId);
+            cartItemService.removeItemFromCart(cartId, itemId);
             return ResponseEntity.ok(new ApiResponse("Removed successfully!", null));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(NOT_FOUND)
@@ -45,12 +45,12 @@ public class CartItemController {
         }
     }
 
-    @PutMapping("/c/{cartId}/i/{productId}/update")
+    @PutMapping("/c/{cartId}/i/{itemId}/update")
     public ResponseEntity<ApiResponse> updateItemQuantity(@PathVariable Long cartId,
-                                                          @PathVariable Long productId,
+                                                          @PathVariable Long itemId,
                                                           @RequestParam Integer quantity){
         try {
-            cartItemService.updateItemQuantity(cartId, productId, quantity);
+            cartItemService.updateItemQuantity(cartId, itemId, quantity);
             return ResponseEntity.ok(new ApiResponse("Updated successfully!", null));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(NOT_FOUND)
