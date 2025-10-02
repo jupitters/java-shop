@@ -8,10 +8,7 @@ import com.jupitters.jupittersshops.service.cart.ICartItemService;
 import jakarta.persistence.PostRemove;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
@@ -35,7 +32,8 @@ public class CartItemController {
         }
     }
 
-    public ResponseEntity<ApiResponse> removeItemFromCart(Long cartId, Long productId) {
+    @DeleteMapping("/item/remove")
+    public ResponseEntity<ApiResponse> removeItemFromCart(@RequestParam Long cartId,@RequestParam Long productId) {
         try {
             cartItemService.removeItemFromCart(cartId, productId);
             return ResponseEntity.ok(new ApiResponse("Removed successfully!", null));
