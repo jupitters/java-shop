@@ -6,6 +6,7 @@ import com.jupitters.jupittersshops.model.Order;
 import com.jupitters.jupittersshops.model.OrderItem;
 import com.jupitters.jupittersshops.model.Product;
 import com.jupitters.jupittersshops.repository.OrderRepository;
+import com.jupitters.jupittersshops.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderService implements IOrderService{
     private final OrderRepository orderRepository;
-
+    private final ProductRepository productRepository;
 
     @Override
     public Order placeOrder(Long userId) {
@@ -29,7 +30,13 @@ public class OrderService implements IOrderService{
                 .map(cartItem -> {
                     Product product = cartItem.getProduct();
                     product.setInventory(product.getInventory() - cartItem.getQuantity());
-                })
+                    productRepository.save(product);
+                    return new OrderItem(
+                            order,
+                            product,
+                            cartItem.getQuantity(),
+                            cartItem.getUnitPrice());
+                }).toList();
     }
 
     private BigDecimal calculateTotalAmount(List<OrderItem> orderItems) {
