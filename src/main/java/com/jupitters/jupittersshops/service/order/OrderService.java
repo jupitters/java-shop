@@ -1,8 +1,10 @@
 package com.jupitters.jupittersshops.service.order;
 
 import com.jupitters.jupittersshops.exceptions.ResourceNotFoundException;
+import com.jupitters.jupittersshops.model.Cart;
 import com.jupitters.jupittersshops.model.Order;
 import com.jupitters.jupittersshops.model.OrderItem;
+import com.jupitters.jupittersshops.model.Product;
 import com.jupitters.jupittersshops.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,9 +17,19 @@ import java.util.List;
 public class OrderService implements IOrderService{
     private final OrderRepository orderRepository;
 
+
     @Override
     public Order placeOrder(Long userId) {
         return null;
+    }
+
+    private List<OrderItem> createOrderItems(Order order, Cart cart) {
+        return cart.getItems()
+                .stream()
+                .map(cartItem -> {
+                    Product product = cartItem.getProduct();
+                    product.setInventory(product.getInventory() - cartItem.getQuantity());
+                })
     }
 
     private BigDecimal calculateTotalAmount(List<OrderItem> orderItems) {
