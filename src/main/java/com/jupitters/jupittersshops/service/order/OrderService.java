@@ -24,7 +24,20 @@ public class OrderService implements IOrderService{
         return null;
     }
 
-
+    private List<OrderItem> createOrderItems(Order order, Cart cart) {
+        return cart.getItems()
+                .stream()
+                .map(cartItem -> {
+                    Product product = cartItem.getProduct();
+                    product.setInventory(product.getInventory() - cartItem.getQuantity());
+                    productRepository.save(product);
+                    return new OrderItem(
+                            order,
+                            product,
+                            cartItem.getQuantity(),
+                            cartItem.getUnitPrice());
+                }).toList();
+    }
 
     private BigDecimal calculateTotalAmount(List<OrderItem> orderItems) {
         return orderItems.stream()
