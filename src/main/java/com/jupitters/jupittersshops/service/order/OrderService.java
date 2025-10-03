@@ -1,5 +1,6 @@
 package com.jupitters.jupittersshops.service.order;
 
+import com.jupitters.jupittersshops.enums.OrderStatus;
 import com.jupitters.jupittersshops.exceptions.ResourceNotFoundException;
 import com.jupitters.jupittersshops.model.Cart;
 import com.jupitters.jupittersshops.model.Order;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -22,6 +24,13 @@ public class OrderService implements IOrderService{
     @Override
     public Order placeOrder(Long userId) {
         return null;
+    }
+
+    private Order createOrder(Cart cart) {
+        Order order = new Order();
+        order.setOrderStatus(OrderStatus.PENDING);
+        order.setOrderDate(LocalDate.now());
+        return order;
     }
 
     private List<OrderItem> createOrderItems(Order order, Cart cart) {
