@@ -71,5 +71,9 @@ public class OrderService implements IOrderService{
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-
+    @Override
+    public Order getOrder(Long orderId) {
+        return orderRepository.findById(orderId)
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found"));
+    }
 }
