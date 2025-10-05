@@ -64,6 +64,12 @@ public class OrderService implements IOrderService{
                 }).toList();
     }
 
+    private BigDecimal calculateTotalAmount(List<OrderItem> orderItems) {
+        return orderItems.stream()
+                .map(item -> item.getPrice()
+                        .multiply(new BigDecimal(item.getQuantity())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
 
     @Override
     public Order getOrder(Long orderId) {
