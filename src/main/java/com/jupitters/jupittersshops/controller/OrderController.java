@@ -6,9 +6,7 @@ import com.jupitters.jupittersshops.service.order.IOrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.ResourceAccessException;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -20,7 +18,7 @@ public class OrderController {
     private final IOrderService orderService;
 
     @PostMapping("/order")
-    public ResponseEntity<ApiResponse> createOrder(Long userId) {
+    public ResponseEntity<ApiResponse> createOrder(@RequestParam Long userId) {
         try {
             Order order = orderService.placeOrder(userId);
             return ResponseEntity.ok(new ApiResponse("Item Order success!", order));
@@ -30,7 +28,8 @@ public class OrderController {
         }
     }
 
-    public ResponseEntity<ApiResponse> getOrderById(Long orderId) {
+    @GetMapping("/id/{orderId}")
+    public ResponseEntity<ApiResponse> getOrderById(@PathVariable Long orderId) {
         try {
             Order order = orderService.getOrder(orderId);
             return ResponseEntity.ok(new ApiResponse("Success!", order));
