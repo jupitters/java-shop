@@ -1,5 +1,6 @@
 package com.jupitters.jupittersshops.service.user;
 
+import com.jupitters.jupittersshops.dto.UserDto;
 import com.jupitters.jupittersshops.exceptions.AlreadyExistsException;
 import com.jupitters.jupittersshops.exceptions.ResourceNotFoundException;
 import com.jupitters.jupittersshops.model.User;
@@ -7,7 +8,9 @@ import com.jupitters.jupittersshops.repository.UserRepository;
 import com.jupitters.jupittersshops.request.CreateUserRequest;
 import com.jupitters.jupittersshops.request.UpdateUserRequest;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
 
 import java.util.Optional;
 
@@ -15,6 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService implements IUserService{
     private final UserRepository userRepository;
+    private final ModelMapper modelMapper;
 
     @Override
     public User getUserById(Long userId) {
@@ -54,5 +58,9 @@ public class UserService implements IUserService{
                 .ifPresentOrElse(userRepository :: delete, () -> {
                     throw new ResourceNotFoundException("User not found");
                 });
+    }
+
+    public UserDto convertUserToDto(User user){
+        return modelMapper.map(user, UserDto.class);
     }
 }
