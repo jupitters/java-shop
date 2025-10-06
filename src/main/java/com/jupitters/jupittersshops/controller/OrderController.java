@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.ResourceAccessException;
 
+import java.util.List;
+
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RequiredArgsConstructor
@@ -33,6 +35,16 @@ public class OrderController {
         try {
             Order order = orderService.getOrder(orderId);
             return ResponseEntity.ok(new ApiResponse("Success!", order));
+        } catch (ResourceAccessException e) {
+            return ResponseEntity.status(NOT_FOUND)
+                    .body(new ApiResponse(e.getMessage(), null));
+        }
+    }
+
+    public ResponseEntity<ApiResponse> getUserOrders(@PathVariable Long userId) {
+        try {
+            List<Order> orders = orderService.getUserOrders(userId);
+            return ResponseEntity.ok(new ApiResponse("Success!", orders));
         } catch (ResourceAccessException e) {
             return ResponseEntity.status(NOT_FOUND)
                     .body(new ApiResponse(e.getMessage(), null));
