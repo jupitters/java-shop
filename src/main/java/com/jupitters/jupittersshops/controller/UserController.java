@@ -2,15 +2,13 @@ package com.jupitters.jupittersshops.controller;
 
 import com.jupitters.jupittersshops.exceptions.ResourceNotFoundException;
 import com.jupitters.jupittersshops.model.User;
+import com.jupitters.jupittersshops.request.CreateUserRequest;
 import com.jupitters.jupittersshops.response.ApiResponse;
 import com.jupitters.jupittersshops.service.user.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
@@ -29,5 +27,10 @@ public class UserController {
             return ResponseEntity.status(NOT_FOUND)
                     .body(new ApiResponse(e.getMessage(), null));
         }
+    }
+
+    public ResponseEntity<ApiResponse> createUser(@RequestParam CreateUserRequest request) {
+        User user = userService.createUser(request);
+        return ResponseEntity.ok(new ApiResponse("Created!", user));
     }
 }
