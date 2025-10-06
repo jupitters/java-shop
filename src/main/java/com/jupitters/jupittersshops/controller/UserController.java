@@ -44,8 +44,14 @@ public class UserController {
         }
     }
 
-    public ResponseEntity<ApiResponse> updateUser(@RequestBody UpdateUserRequest request, Long userId) {
-        User user = userService.updateUser(request, userId);
-        return ResponseEntity.ok(new ApiResponse("Updated!", user));
+    @PutMapping("/id/{userId}")
+    public ResponseEntity<ApiResponse> updateUser(@RequestBody UpdateUserRequest request, @PathVariable Long userId) {
+        try {
+            User user = userService.updateUser(request, userId);
+            return ResponseEntity.ok(new ApiResponse("Updated!", user));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(NOT_FOUND)
+                    .body(new ApiResponse(e.getMessage(), null));
+        }
     }
 }
