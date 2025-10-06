@@ -26,7 +26,14 @@ public class UserService implements IUserService{
 
     @Override
     public User updateUser(UserUpdateRequest request, Long userId) {
-        return null;
+        return userRepository.findById(userId)
+                .map(existingUser -> {
+                    existingUser.setFirstName(request.getFirstName());
+                    existingUser.setLastName(request.getLastName());
+                    return userRepository.save(existingUser);
+                })
+                .orElseThrow(() -> new ResourceNotFoundException("User not found!"));
+
     }
 
     @Override
