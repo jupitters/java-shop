@@ -1,5 +1,6 @@
 package com.jupitters.jupittersshops.controller;
 
+import com.jupitters.jupittersshops.exceptions.AlreadyExistsException;
 import com.jupitters.jupittersshops.exceptions.ResourceNotFoundException;
 import com.jupitters.jupittersshops.model.User;
 import com.jupitters.jupittersshops.request.CreateUserRequest;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RequiredArgsConstructor
@@ -30,12 +32,13 @@ public class UserController {
         }
     }
 
+    @PostMapping("/user")
     public ResponseEntity<ApiResponse> createUser(@RequestParam CreateUserRequest request) {
         try {
             User user = userService.createUser(request);
             return ResponseEntity.ok(new ApiResponse("Created!", user));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        } catch (AlreadyExistsException e) {
+            return ResponseEntity.status(CONFLICT)
                     .body(new ApiResponse(e.getMessage(), null));
         }
     }
