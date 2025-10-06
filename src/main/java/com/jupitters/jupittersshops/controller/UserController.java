@@ -4,6 +4,7 @@ import com.jupitters.jupittersshops.exceptions.AlreadyExistsException;
 import com.jupitters.jupittersshops.exceptions.ResourceNotFoundException;
 import com.jupitters.jupittersshops.model.User;
 import com.jupitters.jupittersshops.request.CreateUserRequest;
+import com.jupitters.jupittersshops.request.UpdateUserRequest;
 import com.jupitters.jupittersshops.response.ApiResponse;
 import com.jupitters.jupittersshops.service.user.IUserService;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +34,7 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    public ResponseEntity<ApiResponse> createUser(@RequestParam CreateUserRequest request) {
+    public ResponseEntity<ApiResponse> createUser(@RequestBody CreateUserRequest request) {
         try {
             User user = userService.createUser(request);
             return ResponseEntity.ok(new ApiResponse("Created!", user));
@@ -41,5 +42,10 @@ public class UserController {
             return ResponseEntity.status(CONFLICT)
                     .body(new ApiResponse(e.getMessage(), null));
         }
+    }
+
+    public ResponseEntity<ApiResponse> updateUser(@RequestBody UpdateUserRequest request, Long userId) {
+        User user = userService.updateUser(request, userId);
+        return ResponseEntity.ok(new ApiResponse("Updated!", user));
     }
 }

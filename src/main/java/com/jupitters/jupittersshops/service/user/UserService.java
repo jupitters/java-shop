@@ -5,7 +5,7 @@ import com.jupitters.jupittersshops.exceptions.ResourceNotFoundException;
 import com.jupitters.jupittersshops.model.User;
 import com.jupitters.jupittersshops.repository.UserRepository;
 import com.jupitters.jupittersshops.request.CreateUserRequest;
-import com.jupitters.jupittersshops.request.UserUpdateRequest;
+import com.jupitters.jupittersshops.request.UpdateUserRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +37,7 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public User updateUser(UserUpdateRequest request, Long userId) {
+    public User updateUser(UpdateUserRequest request, Long userId) {
         return userRepository.findById(userId)
                 .map(existingUser -> {
                     existingUser.setFirstName(request.getFirstName());

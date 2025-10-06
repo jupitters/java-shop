@@ -3,7 +3,7 @@ package com.jupitters.jupittersshops.request;
 import lombok.Data;
 
 @Data
-public class UserUpdateRequest {
+public class UpdateUserRequest {
     private String firstName;
     private String lastName;
 }
