@@ -1,5 +1,6 @@
 package com.jupitters.jupittersshops.controller;
 
+import com.jupitters.jupittersshops.dto.OrderDto;
 import com.jupitters.jupittersshops.model.Order;
 import com.jupitters.jupittersshops.response.ApiResponse;
 import com.jupitters.jupittersshops.service.order.IOrderService;
@@ -33,7 +34,7 @@ public class OrderController {
     @GetMapping("/id/{orderId}")
     public ResponseEntity<ApiResponse> getOrderById(@PathVariable Long orderId) {
         try {
-            Order order = orderService.getOrder(orderId);
+            OrderDto order = orderService.getOrder(orderId);
             return ResponseEntity.ok(new ApiResponse("Success!", order));
         } catch (ResourceAccessException e) {
             return ResponseEntity.status(NOT_FOUND)
