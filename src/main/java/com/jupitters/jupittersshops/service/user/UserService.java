@@ -1,5 +1,6 @@
 package com.jupitters.jupittersshops.service.user;
 
+import com.jupitters.jupittersshops.exceptions.AlreadyExistsException;
 import com.jupitters.jupittersshops.exceptions.ResourceNotFoundException;
 import com.jupitters.jupittersshops.model.User;
 import com.jupitters.jupittersshops.repository.UserRepository;
@@ -7,6 +8,8 @@ import com.jupitters.jupittersshops.request.CreateUserRequest;
 import com.jupitters.jupittersshops.request.UserUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +24,16 @@ public class UserService implements IUserService{
 
     @Override
     public User createUser(CreateUserRequest request) {
-        return null;
+        return Optional.of(request)
+                .filter(user -> !userRepository.existsByEmail(request.getEmail()))
+                .map(req -> {
+                    User user = new User();
+                    user.setFirstName(request.getFirstName());
+                    user.setLastName(request.getLastName());
+                    user.setEmail(request.getEmail());
+                    user.setPassword(request.getPassword());
+                    return userRepository.save(user);
+                }).orElseThrow(() -> new AlreadyExistsException(request.getEmail()+ " already exists."));
     }
 
     @Override
