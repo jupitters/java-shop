@@ -22,7 +22,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public class UserController {
     private final IUserService userService;
 
-    @GetMapping("/id/{userId}")
+    @GetMapping("/user/{userId}")
     public ResponseEntity<ApiResponse> getUserById(@PathVariable Long userId){
         try {
             User user = userService.getUserById(userId);
@@ -44,7 +44,7 @@ public class UserController {
         }
     }
 
-    @PutMapping("/id/{userId}")
+    @PutMapping("/user/{userId}")
     public ResponseEntity<ApiResponse> updateUser(@RequestBody UpdateUserRequest request, @PathVariable Long userId) {
         try {
             User user = userService.updateUser(request, userId);
@@ -55,8 +55,14 @@ public class UserController {
         }
     }
 
+    @DeleteMapping("/user/{userId}")
     public ResponseEntity<ApiResponse> deleteUser (@PathVariable Long userId){
-        userService.deleteUser(userId);
-        return ResponseEntity.ok(new ApiResponse("Delete success!", null));
+        try {
+            userService.deleteUser(userId);
+            return ResponseEntity.ok(new ApiResponse("Delete success!", null));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(NOT_FOUND)
+                    .body(new ApiResponse(e.getMessage(), null));
+        }
     }
 }
