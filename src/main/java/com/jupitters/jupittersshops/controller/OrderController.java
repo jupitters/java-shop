@@ -41,6 +41,7 @@ public class OrderController {
         }
     }
 
+    @GetMapping("/id/user/{userId}")
     public ResponseEntity<ApiResponse> getUserOrders(@PathVariable Long userId) {
         try {
             List<Order> orders = orderService.getUserOrders(userId);
