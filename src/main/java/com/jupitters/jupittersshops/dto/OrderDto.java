@@ -1,12 +1,8 @@
 package com.jupitters.jupittersshops.dto;
 
-import com.jupitters.jupittersshops.enums.OrderStatus;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -17,5 +13,5 @@ public class OrderDto {
     private LocalDateTime orderDate;
     private BigDecimal totalAmount;
     private String status;
-    private List<OrderItemDTO> items;
+    private List<OrderItemDto> items;
 }

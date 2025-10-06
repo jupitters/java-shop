@@ -1,5 +1,6 @@
 package com.jupitters.jupittersshops.service.order;
 
+import com.jupitters.jupittersshops.dto.OrderDto;
 import com.jupitters.jupittersshops.enums.OrderStatus;
 import com.jupitters.jupittersshops.exceptions.ResourceNotFoundException;
 import com.jupitters.jupittersshops.model.Cart;
@@ -11,6 +12,7 @@ import com.jupitters.jupittersshops.repository.ProductRepository;
 import com.jupitters.jupittersshops.service.cart.CartService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -24,6 +26,7 @@ public class OrderService implements IOrderService{
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
     private final CartService cartService;
+    private final ModelMapper modelMapper;
 
     @Transactional
     @Override
@@ -80,6 +83,10 @@ public class OrderService implements IOrderService{
     @Override
     public List<Order> getUserOrders(Long userId) {
         return orderRepository.findByUserId(userId);
+    }
+
+    private OrderDto convertToDto(Order order) {
+        return modelMapper.map(order, OrderDto.class);
     }
 
 }
