@@ -7,6 +7,7 @@ import com.jupitters.jupittersshops.response.ApiResponse;
 import com.jupitters.jupittersshops.service.user.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,12 @@ public class UserController {
     }
 
     public ResponseEntity<ApiResponse> createUser(@RequestParam CreateUserRequest request) {
-        User user = userService.createUser(request);
-        return ResponseEntity.ok(new ApiResponse("Created!", user));
+        try {
+            User user = userService.createUser(request);
+            return ResponseEntity.ok(new ApiResponse("Created!", user));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse(e.getMessage(), null));
+        }
     }
 }
