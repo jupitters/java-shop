@@ -9,6 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.ResourceAccessException;
+
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RequiredArgsConstructor
 @RestController
@@ -28,7 +31,12 @@ public class OrderController {
     }
 
     public ResponseEntity<ApiResponse> getOrderById(Long orderId) {
-        Order order = orderService.getOrder(orderId);
-        return ResponseEntity.ok(new ApiResponse("Success!", order));
+        try {
+            Order order = orderService.getOrder(orderId);
+            return ResponseEntity.ok(new ApiResponse("Success!", order));
+        } catch (ResourceAccessException e) {
+            return ResponseEntity.status(NOT_FOUND)
+                    .body(new ApiResponse(e.getMessage(), null));
+        }
     }
 }
