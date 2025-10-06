@@ -6,6 +6,7 @@ import com.jupitters.jupittersshops.service.order.IOrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderController {
     private final IOrderService orderService;
 
+    @PostMapping("/order")
     public ResponseEntity<ApiResponse> createOrder(Long userId) {
         try {
             Order order = orderService.placeOrder(userId);
@@ -23,5 +25,10 @@ public class OrderController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ApiResponse("Error occurred: ", e.getMessage()));
         }
+    }
+
+    public ResponseEntity<ApiResponse> getOrderById(Long orderId) {
+        Order order = orderService.getOrder(orderId);
+        return ResponseEntity.ok(new ApiResponse("Success!", order));
     }
 }
