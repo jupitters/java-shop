@@ -32,9 +32,9 @@ public class CartItemController {
                                                      @RequestParam Integer quantity){
         try {
             User user = userService.getUserById(1L);
-            Cart cartId = cartService.initializeNewCart(user);
+            Cart cart = cartService.initializeNewCart(user);
 
-            cartItemService.addItemToCart(cartId, itemId, quantity);
+            cartItemService.addItemToCart(cart.getId(), itemId, quantity);
             return ResponseEntity.ok(new ApiResponse("Added successfull!", null));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(NOT_FOUND)
