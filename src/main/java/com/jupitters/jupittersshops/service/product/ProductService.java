@@ -117,7 +117,12 @@ public class ProductService implements IProductService{
         return productRepository.countByBrandAndName(brand, name);
     }
 
-
+    @Override
+    public List<ProductDto> getConvertedProducts(List<Product> products){
+        return products.stream()
+                .map(this::convertToDto)
+                .toList();
+    }
 
     @Override
     public ProductDto convertToDto(Product product){
