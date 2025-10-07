@@ -2,6 +2,7 @@ package com.jupitters.jupittersshops.service.product;
 
 import com.jupitters.jupittersshops.dto.ImageDto;
 import com.jupitters.jupittersshops.dto.ProductDto;
+import com.jupitters.jupittersshops.exceptions.AlreadyExistsException;
 import com.jupitters.jupittersshops.exceptions.ProductNotFoundException;
 import com.jupitters.jupittersshops.model.Category;
 import com.jupitters.jupittersshops.model.Image;
@@ -28,6 +29,10 @@ public class ProductService implements IProductService{
 
     @Override
     public Product addProduct(AddProductRequest request) {
+        if (productExists(request.getName(), request.getBrand())){
+            throw new AlreadyExistsException(request.getBrand()+""+request.getName()+" already exists!");
+        }
+
         Category category = Optional.ofNullable(categoryRepository.findByName(request.getCategory().getName()))
                 .orElseGet(() -> {
                     Category newCategory = new Category(request.getCategory().getName());
