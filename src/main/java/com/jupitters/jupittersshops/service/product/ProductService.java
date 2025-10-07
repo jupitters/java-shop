@@ -36,6 +36,10 @@ public class ProductService implements IProductService{
         request.setCategory(category);
         return productRepository.save(createProduct(request, category));
     }
+    
+    private boolean productExists(String name, String brand) {
+        return productRepository.existsByNameAndBrand(name, brand);
+    }
 
     private Product createProduct(AddProductRequest request, Category category) {
         return new Product(
