@@ -130,7 +130,21 @@ public class ProductController {
         }
      }
 
-
+     @GetMapping("/name/{productName}")
+     public ResponseEntity<ApiResponse> getProductByName(@PathVariable String productName) {
+        try {
+            List<Product> products = productService.getProductsByName(productName);
+            if (products.isEmpty()){
+                return ResponseEntity.status(NOT_FOUND)
+                        .body(new ApiResponse("No products found", productName));
+            }
+            List<ProductDto> productDtos = productService.getConvertedProducts(products);
+            return ResponseEntity.ok(new ApiResponse("Found!", productDtos));
+        } catch (Exception e) {
+            return ResponseEntity.status(INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse(e.getMessage(), null));
+        }
+     }
 
      @GetMapping("/b/{brandName}/n/{productName}")
      public ResponseEntity<ApiResponse> getProductByBrandAndName(@RequestParam String brandName, @RequestParam String productName) {
