@@ -1,6 +1,7 @@
 package com.jupitters.jupittersshops.controller;
 
 import com.jupitters.jupittersshops.dto.ProductDto;
+import com.jupitters.jupittersshops.exceptions.AlreadyExistsException;
 import com.jupitters.jupittersshops.exceptions.ResourceNotFoundException;
 import com.jupitters.jupittersshops.model.Product;
 import com.jupitters.jupittersshops.request.AddProductRequest;
@@ -15,8 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -54,8 +54,8 @@ public class ProductController {
     try {
             Product newProduct = productService.addProduct(product);
             return ResponseEntity.ok(new ApiResponse("Added!", newProduct));
-        } catch (Exception e) {
-            return ResponseEntity.status(INTERNAL_SERVER_ERROR)
+        } catch (AlreadyExistsException e) {
+            return ResponseEntity.status(CONFLICT)
                     .body(new ApiResponse(e.getMessage(), null));
         }
     }
