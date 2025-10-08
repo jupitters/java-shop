@@ -1,8 +1,7 @@
 package com.jupitters.jupittersshops.security.jwt;
 
 import com.jupitters.jupittersshops.security.user.ShopUserDetails;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.Authentication;
@@ -43,5 +42,24 @@ public class JwtUtils {
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
+    }
+
+    public boolean validToken(String token) {
+        try {
+            Jwts.parser()
+                    .setSigningKey(key())
+                    .build()
+                    .parseClaimsJws(token);
+            return true;
+        } catch (ExpiredJwtException | UnsupportedJwtException e) {
+            throw new RuntimeException(e);
+        }
+        catch (MalformedJwtException e) {
+            throw new RuntimeException(e);
+        } catch (io.jsonwebtoken.security.SecurityException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
