@@ -1,4 +1,4 @@
-package com.jupitters.jupittersshops.config;
+package com.jupitters.jupittersshops.security.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
