@@ -51,15 +51,13 @@ public class JwtUtils {
                     .build()
                     .parseClaimsJws(token);
             return true;
-        } catch (ExpiredJwtException | UnsupportedJwtException e) {
-            throw new RuntimeException(e);
-        }
-        catch (MalformedJwtException e) {
-            throw new RuntimeException(e);
-        } catch (io.jsonwebtoken.security.SecurityException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException(e);
+        } catch (ExpiredJwtException
+                 | UnsupportedJwtException
+                 | MalformedJwtException
+                 | io.jsonwebtoken.security.SecurityException
+                 | IllegalArgumentException e) {
+
+            throw new JwtException(e.getMessage());
         }
     }
 }
