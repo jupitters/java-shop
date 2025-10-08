@@ -35,4 +35,13 @@ public class JwtUtils {
     private Key key() {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }
+
+    public String getUsernameFromToken(String token) {
+        return Jwts.parser()
+                .setSigningKey(key())
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+    }
 }
