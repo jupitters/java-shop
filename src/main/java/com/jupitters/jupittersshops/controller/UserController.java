@@ -23,17 +23,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public class UserController {
     private final IUserService userService;
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<ApiResponse> getUserById(@PathVariable Long userId){
-        try {
-            User user = userService.getUserById(userId);
-            UserDto userDto = userService.convertUserToDto(user);
-            return ResponseEntity.ok(new ApiResponse("Success!", userDto));
-        } catch (ResourceNotFoundException e) {
-            return ResponseEntity.status(NOT_FOUND)
-                    .body(new ApiResponse(e.getMessage(), null));
-        }
-    }
+
 
     @PostMapping("/user")
     public ResponseEntity<ApiResponse> createUser(@RequestBody CreateUserRequest request) {
