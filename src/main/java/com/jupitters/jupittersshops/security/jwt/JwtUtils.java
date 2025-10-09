@@ -40,7 +40,14 @@ public class JwtUtils {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }
 
-
+    public String getUsernameFromToken(String token) {
+        return Jwts.parser()
+                .setSigningKey(key())
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+    }
 
     public boolean validateToken(String token) {
         try {
