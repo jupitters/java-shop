@@ -49,20 +49,5 @@ public class JwtUtils {
                 .getSubject();
     }
 
-    public boolean validateToken(String token) {
-        try {
-            Jwts.parser()
-                    .setSigningKey(key())
-                    .build()
-                    .parseClaimsJws(token);
-            return true;
-        } catch (ExpiredJwtException
-                 | UnsupportedJwtException
-                 | MalformedJwtException
-                 | io.jsonwebtoken.security.SecurityException
-                 | IllegalArgumentException e) {
 
-            throw new JwtException(e.getMessage());
-        }
-    }
 }
