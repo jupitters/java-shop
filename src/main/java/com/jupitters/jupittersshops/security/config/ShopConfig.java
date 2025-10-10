@@ -1,5 +1,6 @@
 package com.jupitters.jupittersshops.security.config;
 
+import com.jupitters.jupittersshops.security.jwt.AuthTokenFilter;
 import com.jupitters.jupittersshops.security.jwt.JwtAuthEntryPoint;
 import com.jupitters.jupittersshops.security.user.ShopUserDetailsService;
 import lombok.RequiredArgsConstructor;
@@ -25,5 +26,10 @@ public class ShopConfig {
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthTokenFilter authTokenFilter(){
+        return new AuthTokenFilter();
     }
 }
