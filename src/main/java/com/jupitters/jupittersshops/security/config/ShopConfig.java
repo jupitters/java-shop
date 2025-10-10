@@ -1,5 +1,6 @@
 package com.jupitters.jupittersshops.security.config;
 
+import com.jupitters.jupittersshops.security.jwt.JwtAuthEntryPoint;
 import com.jupitters.jupittersshops.security.user.ShopUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -10,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor
 public class ShopConfig {
     private final ShopUserDetailsService userDetailsService;
+    private final JwtAuthEntryPoint authEntryPoint;
 
     @Bean
     public ModelMapper modelMapper() {
