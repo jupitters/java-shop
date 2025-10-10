@@ -23,7 +23,9 @@ public class JwtUtils {
     public String generateTokenForUser(Authentication authentication) {
         ShopUserDetails userPrincipal = (ShopUserDetails) authentication.getPrincipal();
 
-
+        List<String> roles = userPrincipal.getAuthorities()
+                .stream()
+                .map(GrantedAuthority::getAuthority).toList();
 
         return Jwts.builder()
                 .setSubject(userPrincipal.getEmail())
