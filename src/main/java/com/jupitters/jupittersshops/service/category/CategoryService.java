@@ -23,10 +23,7 @@ public class CategoryService implements ICategoryService {
                 .orElseThrow(() -> new ResourceNotFoundException("Category not found!"));
     }
 
-    @Override
-    public Category getCategoryByName(String name) {
-        return categoryRepository.findByName(name);
-    }
+
 
     @Override
     public List<Category> getAllCategories() {
