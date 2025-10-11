@@ -44,7 +44,15 @@ public class CartService implements ICartService{
         return cart.getTotalAmount();
     }
 
-
+    @Override
+    public Cart initializeNewCart(User user) {
+        return Optional.ofNullable(getCartByUserId(user.getId()))
+                .orElseGet(() -> {
+                    Cart cart = new Cart();
+                    cart.setUser(user);
+                    return cartRepository.save(cart);
+                });
+    }
 
     @Override
     public Cart getCartByUserId(Long userId) {
