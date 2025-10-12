@@ -40,7 +40,15 @@ public class CategoryService implements ICategoryService {
                 .orElseThrow(() -> new AlreadyExistsException(category.getName()));
     }
 
-
+    @Override
+    public Category updateCategory(Category category, Long id) {
+        return Optional.ofNullable(getCategoryById(id))
+                .map(oldCategory -> {
+                    oldCategory.setName(category.getName());
+                    return categoryRepository.save(oldCategory);
+                })
+                .orElseThrow(()-> new ResourceNotFoundException("Category not found!"));
+    }
 
     @Override
     public void deleteCategory(Long id) {
