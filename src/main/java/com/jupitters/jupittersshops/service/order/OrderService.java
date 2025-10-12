@@ -28,7 +28,21 @@ public class OrderService implements IOrderService{
     private final CartService cartService;
     private final ModelMapper modelMapper;
 
-    
+    @Transactional
+    @Override
+    public Order placeOrder(Long userId) {
+        Cart cart = cartService.getCartByUserId(userId);
+        Order order = createOrder(cart);
+        List<OrderItem> orderItemList = createOrderItems(order,  cart);
+
+        order.setOrderItems(new HashSet<>(orderItemList));
+        order.setTotalAmount(calculateTotalAmount(orderItemList));
+        Order savedOrder = orderRepository.save(order);
+
+        cartService.clearCart(cart.getId());
+
+        return savedOrder;
+    }
 
     private Order createOrder(Cart cart) {
         Order order = new Order();
