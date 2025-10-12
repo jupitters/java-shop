@@ -22,7 +22,11 @@ public class ImageService implements IImageService{
     private final ImageRepository imageRepository;
     private final IProductService productService;
 
-
+    @Override
+    public Image getImageById(Long id) {
+        return imageRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Image not found!"));
+    }
 
     @Override
     public void deleteImageById(Long id) {
