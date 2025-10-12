@@ -50,10 +50,5 @@ public class CategoryService implements ICategoryService {
                 .orElseThrow(()-> new ResourceNotFoundException("Category not found!"));
     }
 
-    @Override
-    public void deleteCategory(Long id) {
-        categoryRepository.findById(id)
-                .ifPresentOrElse(categoryRepository::delete,
-                        ()-> {throw new ResourceNotFoundException("Category not found!");});
-    }
+
 }
