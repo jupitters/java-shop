@@ -3,6 +3,7 @@ package com.jupitters.jupittersshops.data;
 import com.jupitters.jupittersshops.model.Role;
 import com.jupitters.jupittersshops.model.User;
 import com.jupitters.jupittersshops.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
+@Transactional
 @Component
 @RequiredArgsConstructor
 public class DataInitializer implements ApplicationListener<ApplicationReadyEvent> {
@@ -22,12 +24,13 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
     public void onApplicationEvent(ApplicationReadyEvent event) {
         Set<String> defaultRoles = Set.of("ROLE_ADMIN", "ROLE_USER");
         createDefaultUserIfNotExists();
-        createDefaultRoleifNotExists(defaultRoles);
+        createDefaultRoleIfNotExists(defaultRoles);
         createDefaultAdminIfNotExists();
     }
 
+
     private void createDefaultUserIfNotExists(){
-        Role userRole = roleRepository.findByName("ROLE_USER").get();
+        Role userRole = roleRepository.findByName("ROLE_USER");
         for (int i = 1; i <= 5; i++){
             String defaultEmail = "user" + i + "@email.com";
             if(userRepository.existsByEmail(defaultEmail)){
@@ -45,7 +48,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
     }
 
     private void createDefaultAdminIfNotExists(){
-        Role adminRole = roleRepository.findByName("ROLE_ADMIN").get();
+        Role adminRole = roleRepository.findByName("ROLE_ADMIN");
         for (int i = 1; i <= 2; i++){
             String defaultEmail = "admin" + i + "@email.com";
             if(userRepository.existsByEmail(defaultEmail)){

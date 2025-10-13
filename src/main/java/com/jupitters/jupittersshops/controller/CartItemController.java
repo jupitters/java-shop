@@ -23,7 +23,7 @@ import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("${api.prefix}/")
+@RequestMapping("${api.prefix}/cartItems")
 public class CartItemController {
     private final ICartItemService cartItemService;
     private final ICartService cartService;
