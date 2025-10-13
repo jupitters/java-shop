@@ -5,12 +5,14 @@ import com.jupitters.jupittersshops.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 public class DataInitializer implements ApplicationListener<ApplicationReadyEvent> {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
@@ -27,7 +29,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
             user.setFirstName("The ");
             user.setLastName("User " + i);
             user.setEmail(defaultEmail);
-            user.setPassword("password");
+            user.setPassword(passwordEncoder.encode("password"));
             userRepository.save(user);
             System.out.println("Default user " + i + " created successfully!");
         }
