@@ -22,6 +22,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
         Set<String> defaultRoles = Set.of("ROLE_ADMIN", "ROLE_CUSTOMER");
         createDefaultUserIfNotExists();
         createDefaultRoleifNotExists(defaultRoles);
+        createDefaultAdminIfNotExists();
     }
 
     private void createDefaultUserIfNotExists(){
@@ -37,6 +38,22 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
             user.setPassword(passwordEncoder.encode("password"));
             userRepository.save(user);
             System.out.println("Default user " + i + " created successfully!");
+        }
+    }
+
+    private void createDefaultAdminIfNotExists(){
+        for (int i = 1; i <= 2; i++){
+            String defaultEmail = "admin" + i + "@email.com";
+            if(userRepository.existsByEmail(defaultEmail)){
+                continue;
+            }
+            User user = new User();
+            user.setFirstName("The ");
+            user.setLastName("Admin " + i);
+            user.setEmail(defaultEmail);
+            user.setPassword(passwordEncoder.encode("password"));
+            userRepository.save(user);
+            System.out.println("Default admin " + i + " created successfully!");
         }
     }
 
