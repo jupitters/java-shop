@@ -32,16 +32,7 @@ public class OrderController {
         }
     }
 
-    @GetMapping("/id/{orderId}")
-    public ResponseEntity<ApiResponse> getOrderById(@PathVariable Long orderId) {
-        try {
-            OrderDto order = orderService.getOrder(orderId);
-            return ResponseEntity.ok(new ApiResponse("Success!", order));
-        } catch (ResourceAccessException e) {
-            return ResponseEntity.status(NOT_FOUND)
-                    .body(new ApiResponse(e.getMessage(), null));
-        }
-    }
+
 
     @GetMapping("/id/user/{userId}")
     public ResponseEntity<ApiResponse> getUserOrders(@PathVariable Long userId) {
