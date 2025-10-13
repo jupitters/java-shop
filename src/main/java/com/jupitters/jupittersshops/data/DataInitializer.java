@@ -24,24 +24,34 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         Set<String> defaultRoles = Set.of("ROLE_ADMIN", "ROLE_USER");
-        createDefaultUserIfNotExists();
-        createDefaultRoleIfNotExists(defaultRoles);
-        createDefaultAdminIfNotExists();
+        createDefaultRoles(defaultRoles);
+        createDefaultUsers();
+        createDefaultAdmins();
     }
 
 
-    private void createDefaultUserIfNotExists(){
+    private void createDefaultRoles(Set<String> roles) {
+        roles.forEach(roleName -> roleRepository.findByName(roleName)
+                .orElseGet(() -> {
+                    Role newRole = new Role(roleName);
+                    roleRepository.save(newRole);
+                    System.out.println("Created role: " + roleName);
+                    return newRole;
+                }));
+    }
+
+    private void createDefaultUsers() {
         Role userRole = roleRepository.findByName("ROLE_USER")
-                .orElseThrow(() -> new RuntimeException("Role ROLE_ADMIN not found"));;
-        for (int i = 1; i <= 5; i++){
-            String defaultEmail = "user" + i + "@email.com";
-            if(userRepository.existsByEmail(defaultEmail)){
-                continue;
-            }
+                .orElseThrow(() -> new RuntimeException("ROLE_USER not found"));
+
+        for (int i = 1; i <= 5; i++) {
+            String email = "user" + i + "@email.com";
+            if (userRepository.existsByEmail(email)) continue;
+
             User user = new User();
-            user.setFirstName("The ");
+            user.setFirstName("The");
             user.setLastName("User " + i);
-            user.setEmail(defaultEmail);
+            user.setEmail(email);
             user.setPassword(passwordEncoder.encode("password"));
             user.setRoles(Set.of(userRole));
             userRepository.save(user);
@@ -49,29 +59,22 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
         }
     }
 
-    private void createDefaultAdminIfNotExists(){
+    private void createDefaultAdmins() {
         Role adminRole = roleRepository.findByName("ROLE_ADMIN")
-                .orElseThrow(() -> new RuntimeException("Role ROLE_ADMIN not found"));;
-        for (int i = 1; i <= 2; i++){
-            String defaultEmail = "admin" + i + "@email.com";
-            if(userRepository.existsByEmail(defaultEmail)){
-                continue;
-            }
-            User user = new User();
-            user.setFirstName("The ");
-            user.setLastName("Admin " + i);
-            user.setEmail(defaultEmail);
-            user.setPassword(passwordEncoder.encode("password"));
-            user.setRoles(Set.of(adminRole));
-            userRepository.save(user);
+                .orElseThrow(() -> new RuntimeException("ROLE_ADMIN not found"));
+
+        for (int i = 1; i <= 2; i++) {
+            String email = "admin" + i + "@email.com";
+            if (userRepository.existsByEmail(email)) continue;
+
+            User admin = new User();
+            admin.setFirstName("The");
+            admin.setLastName("Admin " + i);
+            admin.setEmail(email);
+            admin.setPassword(passwordEncoder.encode("password"));
+            admin.setRoles(Set.of(adminRole));
+            userRepository.save(admin);
             System.out.println("Default admin " + i + " created successfully!");
         }
-    }
-
-    private void createDefaultRoleIfNotExists(Set<String> roles) {
-        roles.stream()
-                .filter(role -> roleRepository.findByName(role).isEmpty())
-                .map(Role::new)
-                .forEach(roleRepository::save);
     }
 }
