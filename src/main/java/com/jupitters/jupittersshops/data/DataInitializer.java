@@ -2,6 +2,7 @@ package com.jupitters.jupittersshops.data;
 
 import com.jupitters.jupittersshops.model.Role;
 import com.jupitters.jupittersshops.model.User;
+import com.jupitters.jupittersshops.repository.RoleRepository;
 import com.jupitters.jupittersshops.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -16,16 +17,18 @@ import java.util.Set;
 public class DataInitializer implements ApplicationListener<ApplicationReadyEvent> {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
-        Set<String> defaultRoles = Set.of("ROLE_ADMIN", "ROLE_CUSTOMER");
+        Set<String> defaultRoles = Set.of("ROLE_ADMIN", "ROLE_USER");
         createDefaultUserIfNotExists();
         createDefaultRoleifNotExists(defaultRoles);
         createDefaultAdminIfNotExists();
     }
 
     private void createDefaultUserIfNotExists(){
+        Role userRole = roleRepository.findByName("ROLE_USER");
         for (int i = 1; i <= 5; i++){
             String defaultEmail = "user" + i + "@email.com";
             if(userRepository.existsByEmail(defaultEmail)){
@@ -57,7 +60,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
         }
     }
 
-    private void createDefaultRoleifNotExists(Set<String> roles) {
+    private void createDefaultRoleIfNotExists(Set<String> roles) {
         roles.stream()
                 .filter(role -> roleRepository.findByName(role).isEmpty())
                 .map(Role::new).forEach(roleRepository::save);
