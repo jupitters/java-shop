@@ -1,5 +1,6 @@
 package com.jupitters.jupittersshops.data;
 
+import com.jupitters.jupittersshops.model.Role;
 import com.jupitters.jupittersshops.model.User;
 import com.jupitters.jupittersshops.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +8,8 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -16,7 +19,9 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
+        Set<String> defaultRoles = Set.of("ROLE_ADMIN", "ROLE_CUSTOMER");
         createDefaultUserIfNotExists();
+        createDefaultRoleifNotExists(defaultRoles);
     }
 
     private void createDefaultUserIfNotExists(){
@@ -33,5 +38,11 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
             userRepository.save(user);
             System.out.println("Default user " + i + " created successfully!");
         }
+    }
+
+    private void createDefaultRoleifNotExists(Set<String> roles) {
+        roles.stream()
+                .filter(role -> roleRepository.findByName(role).isEmpty())
+                .map(Role::new).forEach(roleRepository::save);
     }
 }
