@@ -4,7 +4,8 @@ import com.jupitters.jupittersshops.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Collection;
+import java.util.Optional;
 
 public interface RoleRepository extends JpaRepository<Role, Long> {
-    Role findByName(String role);
+    Optional<Role> findByName(String role);
 }

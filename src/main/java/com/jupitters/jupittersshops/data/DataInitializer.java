@@ -10,6 +10,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
 import java.util.Set;
 
 @Transactional
@@ -30,7 +31,8 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
 
 
     private void createDefaultUserIfNotExists(){
-        Role userRole = roleRepository.findByName("ROLE_USER");
+        Role userRole = roleRepository.findByName("ROLE_USER")
+                .orElseThrow(() -> new RuntimeException("Role ROLE_ADMIN not found"));;
         for (int i = 1; i <= 5; i++){
             String defaultEmail = "user" + i + "@email.com";
             if(userRepository.existsByEmail(defaultEmail)){
@@ -48,7 +50,8 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
     }
 
     private void createDefaultAdminIfNotExists(){
-        Role adminRole = roleRepository.findByName("ROLE_ADMIN");
+        Role adminRole = roleRepository.findByName("ROLE_ADMIN")
+                .orElseThrow(() -> new RuntimeException("Role ROLE_ADMIN not found"));;
         for (int i = 1; i <= 2; i++){
             String defaultEmail = "admin" + i + "@email.com";
             if(userRepository.existsByEmail(defaultEmail)){
@@ -68,6 +71,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
     private void createDefaultRoleIfNotExists(Set<String> roles) {
         roles.stream()
                 .filter(role -> roleRepository.findByName(role).isEmpty())
-                .map(Role::new).forEach(roleRepository::save);
+                .map(Role::new)
+                .forEach(roleRepository::save);
     }
 }
