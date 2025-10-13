@@ -2,7 +2,6 @@ package com.jupitters.jupittersshops.data;
 
 import com.jupitters.jupittersshops.model.Role;
 import com.jupitters.jupittersshops.model.User;
-import com.jupitters.jupittersshops.repository.RoleRepository;
 import com.jupitters.jupittersshops.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -28,7 +27,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
     }
 
     private void createDefaultUserIfNotExists(){
-        Role userRole = roleRepository.findByName("ROLE_USER");
+        Role userRole = roleRepository.findByName("ROLE_USER").get();
         for (int i = 1; i <= 5; i++){
             String defaultEmail = "user" + i + "@email.com";
             if(userRepository.existsByEmail(defaultEmail)){
@@ -39,12 +38,14 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
             user.setLastName("User " + i);
             user.setEmail(defaultEmail);
             user.setPassword(passwordEncoder.encode("password"));
+            user.setRoles(Set.of(userRole));
             userRepository.save(user);
             System.out.println("Default user " + i + " created successfully!");
         }
     }
 
     private void createDefaultAdminIfNotExists(){
+        Role adminRole = roleRepository.findByName("ROLE_ADMIN").get();
         for (int i = 1; i <= 2; i++){
             String defaultEmail = "admin" + i + "@email.com";
             if(userRepository.existsByEmail(defaultEmail)){
@@ -55,6 +56,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
             user.setLastName("Admin " + i);
             user.setEmail(defaultEmail);
             user.setPassword(passwordEncoder.encode("password"));
+            user.setRoles(Set.of(adminRole));
             userRepository.save(user);
             System.out.println("Default admin " + i + " created successfully!");
         }
