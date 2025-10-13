@@ -9,6 +9,7 @@ import com.jupitters.jupittersshops.response.ApiResponse;
 import com.jupitters.jupittersshops.service.cart.ICartItemService;
 import com.jupitters.jupittersshops.service.cart.ICartService;
 import com.jupitters.jupittersshops.service.user.IUserService;
+import io.jsonwebtoken.JwtException;
 import jakarta.persistence.PostRemove;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +40,8 @@ public class CartItemController {
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(NOT_FOUND)
                     .body(new ApiResponse(e.getMessage(), null));
+        } catch (JwtException e) {
+            return ResponseEntity.badRequest().body(new ApiResponse(e.getMessage(), null));
         }
     }
 
