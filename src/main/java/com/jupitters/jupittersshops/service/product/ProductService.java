@@ -46,16 +46,7 @@ public class ProductService implements IProductService{
         return productRepository.existsByNameAndBrand(name, brand);
     }
 
-    private Product createProduct(AddProductRequest request, Category category) {
-        return new Product(
-                request.getName(),
-                request.getBrand(),
-                request.getDescription(),
-                request.getPrice(),
-                request.getInventory(),
-                category
-        );
-    }
+
 
     @Override
     public List<Product> getAllProducts() {
