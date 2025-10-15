@@ -29,14 +29,7 @@ public class CartService implements ICartService{
         return cartRepository.save(cart);
     }
 
-    @Transactional
-    @Override
-    public void clearCart(Long id) {
-        Cart cart = getCart(id);
-        cartItemRepository.deleteAllByCartId(id);
-        cart.getItems().clear();
-        cartRepository.deleteById(id);
-    }
+
 
     @Override
     public BigDecimal getTotalPrice(Long id) {
