@@ -41,7 +41,13 @@ public class CartItemService implements ICartItemService{
         cartRepository.save(cart);
     }
 
-    
+    @Override
+    public void removeItemFromCart(Long cartId, Long productId) {
+        Cart cart = cartService.getCart(cartId);
+        CartItem itemToRemove = getCartItem(cartId, productId);
+        cart.removeItem(itemToRemove);
+        cartRepository.save(cart);
+    }
 
     @Override
     public void updateItemQuantity(Long cartId, Long productId, Integer quantity) {
