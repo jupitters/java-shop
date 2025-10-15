@@ -38,11 +38,7 @@ public class CartService implements ICartService{
         cartRepository.deleteById(id);
     }
 
-    @Override
-    public BigDecimal getTotalPrice(Long id) {
-        Cart cart = getCart(id);
-        return cart.getTotalAmount();
-    }
+
 
     @Override
     public Cart initializeNewCart(User user) {
