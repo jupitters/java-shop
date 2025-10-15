@@ -25,7 +25,21 @@ public class CartItemService implements ICartItemService{
         Cart cart = cartService.getCart(cartId);
         Product product = productService.getProductById(productId);
         CartItem cartItem = getCartItem(cartId, productId);
+        if(cartItem.getId() == null){
+            cartItem.setProduct(product);
+            cartItem.setQuantity(quantity);
+            cartItem.setCart(cart);
+            cartItem.setUnitPrice(product.getPrice());
+        }
+        else {
+            cartItem.setQuantity(cartItem.getQuantity() + quantity);
+        }
 
+        cartItem.setTotalPrice();
+        cart.addItem(cartItem);
+        cartItemRepository.save(cartItem);
+        cartRepository.save(cart);
+    }
 
     @Override
     public void removeItemFromCart(Long cartId, Long productId) {
