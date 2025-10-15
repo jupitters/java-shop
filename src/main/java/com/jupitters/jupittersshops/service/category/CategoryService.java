@@ -17,11 +17,7 @@ public class CategoryService implements ICategoryService {
     private final CategoryRepository categoryRepository;
     private final ProductRepository productRepository;
 
-    @Override
-    public Category getCategoryById(Long id) {
-        return categoryRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Category not found!"));
-    }
+
 
     @Override
     public Category getCategoryByName(String name) {
