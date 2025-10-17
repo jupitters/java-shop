@@ -29,7 +29,19 @@ public class UserService implements IUserService{
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
-
+    @Override
+    public User createUser(CreateUserRequest request) {
+        return Optional.of(request)
+                .filter(user -> !userRepository.existsByEmail(request.getEmail()))
+                .map(req -> {
+                    User user = new User();
+                    user.setFirstName(request.getFirstName());
+                    user.setLastName(request.getLastName());
+                    user.setEmail(request.getEmail());
+                    user.setPassword(passwordEncoder.encode(request.getPassword()));
+                    return userRepository.save(user);
+                }).orElseThrow(() -> new AlreadyExistsException(request.getEmail()+ " already exists."));
+    }
 
     @Override
     public User updateUser(UpdateUserRequest request, Long userId) {
