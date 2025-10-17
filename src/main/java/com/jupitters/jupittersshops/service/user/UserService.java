@@ -55,7 +55,13 @@ public class UserService implements IUserService{
 
     }
 
-
+    @Override
+    public void deleteUser(Long userId) {
+        userRepository.findById(userId)
+                .ifPresentOrElse(userRepository :: delete, () -> {
+                    throw new ResourceNotFoundException("User not found");
+                });
+    }
 
     @Override
     public UserDto convertUserToDto(User user){
