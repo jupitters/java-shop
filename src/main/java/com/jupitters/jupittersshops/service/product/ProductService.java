@@ -83,7 +83,18 @@ public class ProductService implements IProductService{
                 .orElseThrow(() -> new ProductNotFoundException("Product not found!"));
     }
 
+    private Product updateExistingProduct(Product existingProduct, ProductUpdateRequest request) {
+        existingProduct.setName(request.getName());
+        existingProduct.setBrand(request.getBrand());
+        existingProduct.setPrice(request.getPrice());
+        existingProduct.setInventory(request.getInventory());
+        existingProduct.setDescription(request.getDescription());
 
+        Category category = categoryRepository.findByName(request.getCategory().getName());
+        existingProduct.setCategory(category);
+
+        return existingProduct;
+    }
 
     @Override
     public List<Product> getProductByCategory(String category) {
