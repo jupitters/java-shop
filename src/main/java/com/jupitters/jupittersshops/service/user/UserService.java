@@ -43,7 +43,17 @@ public class UserService implements IUserService{
                 }).orElseThrow(() -> new AlreadyExistsException(request.getEmail()+ " already exists."));
     }
 
+    @Override
+    public User updateUser(UpdateUserRequest request, Long userId) {
+        return userRepository.findById(userId)
+                .map(existingUser -> {
+                    existingUser.setFirstName(request.getFirstName());
+                    existingUser.setLastName(request.getLastName());
+                    return userRepository.save(existingUser);
+                })
+                .orElseThrow(() -> new ResourceNotFoundException("User not found!"));
 
+    }
 
     @Override
     public void deleteUser(Long userId) {
