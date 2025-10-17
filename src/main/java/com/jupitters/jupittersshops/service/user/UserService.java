@@ -23,7 +23,11 @@ public class UserService implements IUserService{
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
 
-
+    @Override
+    public User getUserById(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+    }
 
     @Override
     public User createUser(CreateUserRequest request) {
