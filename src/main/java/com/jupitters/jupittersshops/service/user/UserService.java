@@ -68,5 +68,10 @@ public class UserService implements IUserService{
         return modelMapper.map(user, UserDto.class);
     }
 
-
+    @Override
+    public User getAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        return userRepository.findByEmail(email);
+    }
 }
