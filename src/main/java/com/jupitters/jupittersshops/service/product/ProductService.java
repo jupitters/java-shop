@@ -62,7 +62,11 @@ public class ProductService implements IProductService{
         return productRepository.findAll();
     }
 
-
+    @Override
+    public Product getProductById(Long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("Product not found!"));
+    }
 
     @Override
     public void deleteProductById(Long id) {
