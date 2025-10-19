@@ -33,12 +33,7 @@ public class CategoryService implements ICategoryService {
         return categoryRepository.findAll();
     }
 
-    @Override
-    public Category addCategory(Category category) {
-        return Optional.of(category).filter(c -> !categoryRepository.existsByName(c.getName()))
-                .map(categoryRepository :: save)
-                .orElseThrow(() -> new AlreadyExistsException(category.getName()));
-    }
+
 
     @Override
     public Category updateCategory(Category category, Long id) {
