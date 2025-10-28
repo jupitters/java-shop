@@ -72,7 +72,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
             admin.setFirstName("The");
             admin.setLastName("Admin " + i);
             admin.setEmail(email);
-            admin.setAddress("Street " + i + "Av. " + (i * Math.random() * 10));
+            admin.setAddress("Street " + i + ", Av. " + (int) i * Math.random() * 100);
             admin.setPassword(passwordEncoder.encode("password"));
             admin.setRoles(Set.of(adminRole));
             userRepository.save(admin);
