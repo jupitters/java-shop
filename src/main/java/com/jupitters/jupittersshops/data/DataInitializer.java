@@ -52,6 +52,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
             user.setFirstName("The");
             user.setLastName("User " + i);
             user.setEmail(email);
+            user.setAddress("Street " + i + "Av. " + (i * Math.random() * 10));
             user.setPassword(passwordEncoder.encode("password"));
             user.setRoles(Set.of(userRole));
             userRepository.save(user);
@@ -71,6 +72,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
             admin.setFirstName("The");
             admin.setLastName("Admin " + i);
             admin.setEmail(email);
+            admin.setAddress("Street " + i + "Av. " + (i * Math.random() * 10));
             admin.setPassword(passwordEncoder.encode("password"));
             admin.setRoles(Set.of(adminRole));
             userRepository.save(admin);

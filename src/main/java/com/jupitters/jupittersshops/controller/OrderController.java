@@ -33,7 +33,7 @@ public class OrderController {
         }
     }
 
-    @PostMapping("/all")
+    @GetMapping("/all")
     public ResponseEntity<ApiResponse> getAllOrders() {
         try {
             List<OrderDto> orders = orderService.getAllOrders();
