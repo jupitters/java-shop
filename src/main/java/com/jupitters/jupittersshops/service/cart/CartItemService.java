@@ -24,8 +24,13 @@ public class CartItemService implements ICartItemService{
     public void addItemToCart(Long cartId, Long productId, Integer quantity) {
         Cart cart = cartService.getCart(cartId);
         Product product = productService.getProductById(productId);
-        CartItem cartItem = getCartItem(cartId, productId);
-        if(cartItem.getId() == null){
+        CartItem cartItem = cart.getItems().stream()
+                .filter(item -> item.getProduct().getId().equals(productId))
+                .findFirst()
+                .orElse(null);
+
+        if(cartItem == null){
+            cartItem = new CartItem();
             cartItem.setProduct(product);
             cartItem.setQuantity(quantity);
             cartItem.setCart(cart);

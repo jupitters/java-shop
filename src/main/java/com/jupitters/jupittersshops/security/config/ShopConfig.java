@@ -2,6 +2,7 @@ package com.jupitters.jupittersshops.security.config;
 
 import com.jupitters.jupittersshops.security.jwt.AuthTokenFilter;
 import com.jupitters.jupittersshops.security.jwt.JwtAuthEntryPoint;
+import com.jupitters.jupittersshops.security.jwt.JwtUtils;
 import com.jupitters.jupittersshops.security.user.ShopUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -43,8 +44,8 @@ public class ShopConfig {
     }
 
     @Bean
-    public AuthTokenFilter authTokenFilter(){
-        return new AuthTokenFilter();
+    public AuthTokenFilter authTokenFilter(JwtUtils jwtUtils){
+        return new AuthTokenFilter(jwtUtils, userDetailsService);
     }
 
     @Bean
@@ -61,14 +62,14 @@ public class ShopConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, JwtUtils jwtUtils) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(authEntryPoint))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth.requestMatchers(SECURED_URLS.toArray(String[]::new)).authenticated()
                         .anyRequest().permitAll());
         http.authenticationProvider(daoAuthenticationProvider());
-        http.addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(authTokenFilter(jwtUtils), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 }
