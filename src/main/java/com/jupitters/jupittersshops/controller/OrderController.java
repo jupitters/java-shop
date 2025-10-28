@@ -12,6 +12,7 @@ import org.springframework.web.client.ResourceAccessException;
 
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RequiredArgsConstructor
@@ -34,8 +35,13 @@ public class OrderController {
 
     @PostMapping("/all")
     public ResponseEntity<ApiResponse> getAllOrders() {
-        List<OrderDto> orders = orderService.getAllOrders();
-        return ResponseEntity.ok(new ApiResponse("Item Orders success!", orders));
+        try {
+            List<OrderDto> orders = orderService.getAllOrders();
+            return ResponseEntity.ok(new ApiResponse("Item Orders success!", orders));
+        } catch (Exception e) {
+            return ResponseEntity.status(INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse("Error occurred: ", e.getMessage()));
+        }
     }
 
     @GetMapping("/id/{orderId}")
