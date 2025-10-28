@@ -32,6 +32,12 @@ public class OrderController {
         }
     }
 
+    public ResponseEntity<ApiResponse> getAllOrders() {
+        List<OrderDto> orders = orderService.getAllOrders();
+        return ResponseEntity.ok(new ApiResponse("Item Orders success!", orders));
+
+    }
+
     @GetMapping("/id/{orderId}")
     public ResponseEntity<ApiResponse> getOrderById(@PathVariable Long orderId) {
         try {
