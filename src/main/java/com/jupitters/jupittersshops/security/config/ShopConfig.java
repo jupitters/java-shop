@@ -72,4 +72,6 @@ public class ShopConfig {
         http.addFilterBefore(authTokenFilter(jwtUtils), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
+
+    
 }

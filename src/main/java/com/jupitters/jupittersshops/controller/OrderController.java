@@ -17,6 +17,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("${api.prefix}/orders")
 public class OrderController {
     private final IOrderService orderService;
