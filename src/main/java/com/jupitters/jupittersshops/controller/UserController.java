@@ -48,17 +48,7 @@ public class UserController {
         }
     }
 
-    @PutMapping("/user/{userId}")
-    public ResponseEntity<ApiResponse> updateUser(@RequestBody UpdateUserRequest request, @PathVariable Long userId) {
-        try {
-            User user = userService.updateUser(request, userId);
-            UserDto userDto = userService.convertUserToDto(user);
-            return ResponseEntity.ok(new ApiResponse("Updated!", userDto));
-        } catch (ResourceNotFoundException e) {
-            return ResponseEntity.status(NOT_FOUND)
-                    .body(new ApiResponse(e.getMessage(), null));
-        }
-    }
+    
 
     @DeleteMapping("/user/{userId}")
     public ResponseEntity<ApiResponse> deleteUser (@PathVariable Long userId){
