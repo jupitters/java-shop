@@ -46,7 +46,16 @@ public class CartItemController {
         }
     }
 
-    
+    @DeleteMapping("/c/{cartId}/i/{itemId}/remove")
+    public ResponseEntity<ApiResponse> removeItemFromCart(@PathVariable Long cartId, @PathVariable Long itemId) {
+        try {
+            cartItemService.removeItemFromCart(cartId, itemId);
+            return ResponseEntity.ok(new ApiResponse("Removed successfully!", null));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(NOT_FOUND)
+                    .body(new ApiResponse(e.getMessage(), null));
+        }
+    }
 
     @PutMapping("/c/{cartId}/i/{itemId}/update")
     public ResponseEntity<ApiResponse> updateItemQuantity(@PathVariable Long cartId,
