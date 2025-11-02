@@ -29,22 +29,7 @@ public class CartItemController {
     private final ICartService cartService;
     private final IUserService userService;
 
-    @PostMapping("/item/add")
-    public ResponseEntity<ApiResponse> addItemToCart(@RequestParam Long itemId,
-                                                     @RequestParam Integer quantity){
-        try {
-            User user = userService.getAuthenticatedUser();
-            Cart cart = cartService.initializeNewCart(user);
-
-            cartItemService.addItemToCart(cart.getId(), itemId, quantity);
-            return ResponseEntity.ok(new ApiResponse("Added successfull!", null));
-        } catch (ResourceNotFoundException e) {
-            return ResponseEntity.status(NOT_FOUND)
-                    .body(new ApiResponse(e.getMessage(), null));
-        } catch (JwtException e) {
-            return ResponseEntity.status(UNAUTHORIZED).body(new ApiResponse(e.getMessage(), null));
-        }
-    }
+    
 
     @DeleteMapping("/c/{cartId}/i/{itemId}/remove")
     public ResponseEntity<ApiResponse> removeItemFromCart(@PathVariable Long cartId, @PathVariable Long itemId) {
