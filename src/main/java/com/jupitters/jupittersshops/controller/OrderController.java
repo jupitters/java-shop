@@ -4,6 +4,8 @@ import com.jupitters.jupittersshops.dto.OrderDto;
 import com.jupitters.jupittersshops.enums.OrderStatus;
 import com.jupitters.jupittersshops.exceptions.ResourceNotFoundException;
 import com.jupitters.jupittersshops.model.Order;
+import com.jupitters.jupittersshops.request.UpdateOrderRequest;
+import com.jupitters.jupittersshops.request.UpdateUserRequest;
 import com.jupitters.jupittersshops.response.ApiResponse;
 import com.jupitters.jupittersshops.service.order.IOrderService;
 import lombok.RequiredArgsConstructor;
@@ -69,10 +71,10 @@ public class OrderController {
         }
     }
 
-    @PutMapping("/order/{orderId}")
-    public ResponseEntity<ApiResponse> updateOrderStatus(@RequestBody OrderStatus orderStatus, @PathVariable Long orderId){
+    @PatchMapping("/order/{orderId}")
+    public ResponseEntity<ApiResponse> updateOrderStatus(@RequestBody UpdateOrderRequest request, @PathVariable Long orderId){
         try {
-            Order order = orderService.updateOrderStatus(orderStatus, orderId);
+            Order order = orderService.updateOrderStatus(request.getOrderStatus(), orderId);
             OrderDto orderDto = orderService.convertToDto(order);
             return ResponseEntity.ok(new ApiResponse("Status Updated!", orderDto));
         } catch (ResourceNotFoundException e) {

@@ -5,6 +5,5 @@ import lombok.Data;
 
 @Data
 public class UpdateOrderRequest {
-    Long id;
-    OrderStatus order_status;
+    OrderStatus orderStatus;
 }
