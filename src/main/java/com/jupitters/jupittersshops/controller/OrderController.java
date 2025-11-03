@@ -67,4 +67,6 @@ public class OrderController {
         }
     }
 
+    public ResponseEntity<ApiResponse> updateOrderStatus(@RequestBody UpdateOrderRequest request)
+
 }
