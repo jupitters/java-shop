@@ -69,6 +69,7 @@ public class OrderController {
         }
     }
 
+    @PutMapping("/order/{orderId}")
     public ResponseEntity<ApiResponse> updateOrderStatus(@RequestBody OrderStatus orderStatus, @PathVariable Long orderId){
         try {
             Order order = orderService.updateOrderStatus(orderStatus, orderId);
