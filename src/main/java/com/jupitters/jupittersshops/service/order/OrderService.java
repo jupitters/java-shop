@@ -96,10 +96,10 @@ public class OrderService implements IOrderService{
     }
 
     @Override
-    public Order updateOrderStatus(OrderStatus order_status, Long orderId) {
+    public Order updateOrderStatus(OrderStatus orderStatus, Long orderId) {
         return orderRepository.findById(orderId)
                 .map((order) -> {
-                    order.setOrderStatus(order_status);
+                    order.setOrderStatus(orderStatus);
                     return orderRepository.save(order);
                 })
                 .orElseThrow(() -> new ResourceNotFoundException("Order not found"));
