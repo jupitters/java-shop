@@ -2,6 +2,7 @@ package com.jupitters.jupittersshops.controller;
 
 import com.jupitters.jupittersshops.dto.OrderDto;
 import com.jupitters.jupittersshops.enums.OrderStatus;
+import com.jupitters.jupittersshops.exceptions.ResourceNotFoundException;
 import com.jupitters.jupittersshops.model.Order;
 import com.jupitters.jupittersshops.response.ApiResponse;
 import com.jupitters.jupittersshops.service.order.IOrderService;
@@ -69,9 +70,14 @@ public class OrderController {
     }
 
     public ResponseEntity<ApiResponse> updateOrderStatus(@RequestBody OrderStatus orderStatus, @PathVariable Long orderId){
-        Order order = orderService.updateOrderStatus(orderStatus, orderId);
-        OrderDto orderDto = orderService.convertToDto(order);
-        return ResponseEntity.ok(new ApiResponse("Status Updated!", orderDto));
+        try {
+            Order order = orderService.updateOrderStatus(orderStatus, orderId);
+            OrderDto orderDto = orderService.convertToDto(order);
+            return ResponseEntity.ok(new ApiResponse("Status Updated!", orderDto));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(NOT_FOUND)
+                    .body(new ApiResponse(e.getMessage(), null));
+        }
     }
 
 }
