@@ -1,6 +1,7 @@
 package com.jupitters.jupittersshops.controller;
 
 import com.jupitters.jupittersshops.dto.OrderDto;
+import com.jupitters.jupittersshops.enums.OrderStatus;
 import com.jupitters.jupittersshops.model.Order;
 import com.jupitters.jupittersshops.response.ApiResponse;
 import com.jupitters.jupittersshops.service.order.IOrderService;
@@ -67,6 +68,10 @@ public class OrderController {
         }
     }
 
-    public ResponseEntity<ApiResponse> updateOrderStatus(@RequestBody UpdateOrderRequest request)
+    public ResponseEntity<ApiResponse> updateOrderStatus(@RequestBody OrderStatus orderStatus, @PathVariable Long orderId){
+        Order order = orderService.updateOrderStatus(orderStatus, orderId);
+        OrderDto orderDto = orderService.convertToDto(order);
+        return ResponseEntity.ok(new ApiResponse("Status Updated!", orderDto));
+    }
 
 }
