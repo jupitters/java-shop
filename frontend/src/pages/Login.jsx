@@ -13,11 +13,14 @@ const Login = () => {
     e.preventDefault();
     
     try{
-        const response = await axios.post("http://localhost/api/v1/auth/login", {email: email, password: senha,} )
-        const user = response.data;
-        console.log(user);
+        const response = await axios.post("http://localhost:9191/api/v1/auth/login", {email: email, password: senha,} )
+        const token = response.data.data.token;
+        const userId = response.data.data.userId;
+        
+        localStorage.setItem("token", token);
+        localStorage.setItem("userId", userId);
 
-        // navigate("/", { state: { user } });
+        navigate("/", { replace: true });
     } catch (error) {
         console.log(error);
     }

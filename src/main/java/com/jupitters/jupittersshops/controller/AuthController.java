@@ -1,13 +1,6 @@
 package com.jupitters.jupittersshops.controller;
 
-import com.jupitters.jupittersshops.request.LoginRequest;
-import com.jupitters.jupittersshops.response.ApiResponse;
-import com.jupitters.jupittersshops.response.JwtResponse;
-import com.jupitters.jupittersshops.security.jwt.JwtUtils;
-import com.jupitters.jupittersshops.security.user.ShopUserDetails;
-import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import static org.ietf.jgss.GSSException.UNAUTHORIZED;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,9 +12,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpClientErrorException;
 
-import static org.ietf.jgss.GSSException.UNAUTHORIZED;
+import com.jupitters.jupittersshops.request.LoginRequest;
+import com.jupitters.jupittersshops.response.ApiResponse;
+import com.jupitters.jupittersshops.response.JwtResponse;
+import com.jupitters.jupittersshops.security.jwt.JwtUtils;
+import com.jupitters.jupittersshops.security.user.ShopUserDetails;
+
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
