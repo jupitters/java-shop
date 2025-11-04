@@ -5,6 +5,8 @@ const Navbar = () => {
     <div>
         <h1 className={{display: "flex", gap: "1rem", padding: "10px"}}>oi</h1>
         <Link to="/">Home</Link>
+        <Link to="/cart">Home</Link>
+        <Link to="/profile">Home</Link>
     </div>
   )
 }
