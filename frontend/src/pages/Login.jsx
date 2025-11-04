@@ -9,11 +9,11 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     try{
-        const response = axios.post("http://localhost/api/v1/auth/login", {email: email, password: senha,} )
+        const response = await axios.post("http://localhost/api/v1/auth/login", {email: email, password: senha,} )
         const user = response.data;
         console.log(user);
 
