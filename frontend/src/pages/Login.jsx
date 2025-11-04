@@ -13,7 +13,7 @@ const Login = () => {
     e.preventDefault();
     
     try{
-        const response = axios.post("http://localhost/api/v1/auth/login", {email: email, passwoord: senha,} )
+        const response = axios.post("http://localhost/api/v1/auth/login", {email: email, password: senha,} )
         const user = response.data;
         console.log(user);
 
