@@ -9,27 +9,35 @@ import NotFound from './pages/NotFound';
 import Profile from './pages/Profile';
 
 function App() {
-  const isAuthenticated = true;
+  // Aqui você poderia pegar o token do localStorage, por exemplo:
+  // const isAuthenticated = !!localStorage.getItem("token");
+  const isAuthenticated = true; // só para exemplo
 
   return (
-    <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path='/register' element={<Register />} />
+    <>
+      {/* Navbar só aparece se o usuário estiver autenticado */}
+      {isAuthenticated && <Navbar />}
 
-      {
-        isAuthenticated ? (
+      <Routes>
+        {/* Rotas públicas */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
+        {/* Rotas protegidas */}
+        {isAuthenticated ? (
           <>
-            <Route path='/' element={<Home />} />
-            <Route path='/cart' element={<Cart />} />
-            <Route path='/profile' element={<Profile />} />
-            <Route path='*' element={<NotFound />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="*" element={<NotFound />} />
           </>
         ) : (
-          <Route path='*' element={<Navigate to="/login" />} />
-        )
-      }
-    </Routes>
+          // se não estiver autenticado, redireciona tudo para login
+          <Route path="*" element={<Navigate to="/login" />} />
+        )}
+      </Routes>
+    </>
   );
 }
 
-export default App
+export default App;

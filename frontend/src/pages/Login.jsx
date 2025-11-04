@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { Form, Button, Container } from "react-bootstrap";
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+    const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
@@ -9,7 +13,10 @@ const Login = () => {
     e.preventDefault();
     
     try{
-        
+        const response = axios.post("http://localhost/api/v1/login", {email: email, passwoord: senha,} )
+        const user = response.data;
+
+        navigate("/", { state: { user } });
     } catch (error) {
         console.log(error);
     }
