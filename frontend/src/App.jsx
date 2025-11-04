@@ -1,13 +1,33 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from './components/Navbar';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import Login from './pages/Login';
+import Home from './pages/Home';
+import Cart from './pages/Cart';
+import Register from './pages/Register';
+import NotFound from './pages/NotFound';
 
 function App() {
+  const isAuthenticated = true;
 
   return (
-    <>
-      <Navbar />
-    </>
-  )
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path='/register' element={<Register />} />
+
+      {
+        isAuthenticated ? (
+          <>
+            <Route path='/' element={<Home />} />
+            <Route path='/cart' element={<Cart />} />
+            <Route path='*' element={<NotFound />} />
+          </>
+        ) : (
+          <Route path='*' element={<Navigate to="/login" />} />
+        )
+      }
+    </Routes>
+  );
 }
 
 export default App

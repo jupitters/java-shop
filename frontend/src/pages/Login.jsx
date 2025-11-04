@@ -2,7 +2,13 @@ import React from 'react'
 
 const Login = () => {
   return (
-    <div>Login</div>
+    <div className='container'>
+        <div>
+            <form>
+                <input type='text' placeholder='Name'></input>
+            </form>
+        </div>
+    </div>
   )
 }
 
