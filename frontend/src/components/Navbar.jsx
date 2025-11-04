@@ -1,13 +1,12 @@
-import Button from 'react-bootstrap/Button'
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <div>
-        <h1 className={{display: "flex", gap: "1rem", padding: "10px"}}>oi</h1>
+    <nav className={{display: "flex", gap: "1rem", padding: "10px"}}>
         <Link to="/">Home</Link>
-        <Link to="/cart">Home</Link>
-        <Link to="/profile">Home</Link>
-    </div>
+        <Link to="/cart">Cart</Link>
+        <Link to="/profile">Profile</Link>
+    </nav>
   )
 }
 

@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Cart from './pages/Cart';
 import Register from './pages/Register';
 import NotFound from './pages/NotFound';
+import Profile from './pages/Profile';
 
 function App() {
   const isAuthenticated = true;
@@ -20,6 +21,7 @@ function App() {
           <>
             <Route path='/' element={<Home />} />
             <Route path='/cart' element={<Cart />} />
+            <Route path='/profile' element={<Profile />} />
             <Route path='*' element={<NotFound />} />
           </>
         ) : (
