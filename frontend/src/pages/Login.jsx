@@ -13,10 +13,11 @@ const Login = () => {
     e.preventDefault();
     
     try{
-        const response = axios.post("http://localhost/api/v1/login", {email: email, passwoord: senha,} )
+        const response = axios.post("http://localhost/api/v1/auth/login", {email: email, passwoord: senha,} )
         const user = response.data;
+        console.log(user);
 
-        navigate("/", { state: { user } });
+        // navigate("/", { state: { user } });
     } catch (error) {
         console.log(error);
     }
