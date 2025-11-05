@@ -7,8 +7,9 @@ import Cart from './pages/Cart';
 import Register from './pages/Register';
 import NotFound from './pages/NotFound';
 import Profile from './pages/Profile';
+import AddProduct from './pages/AddProduct';
 import { useContext } from "react";
-import { AuthContext } from "./context/AuthContext";
+import { AuthContext } from "./context/AppContext";
 import { jwtDecode } from "jwt-decode";
 
 function App() {
