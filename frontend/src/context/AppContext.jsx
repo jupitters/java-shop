@@ -29,7 +29,7 @@ export const AppProvider = ({ children }) => {
         userId = decoded.id;
       }
 
-      const { data } = await axios.get(`http://localhost:9191/api/v1/user/${userId}`);
+      const { data } = await axios.get(`http://localhost:9191/api/v1/users/${userId}`);
       setUser(data.data);
     } catch (error) {
       console.log(error)

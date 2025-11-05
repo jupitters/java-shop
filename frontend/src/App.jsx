@@ -9,11 +9,11 @@ import NotFound from './pages/NotFound';
 import Profile from './pages/Profile';
 import AddProduct from './pages/AddProduct';
 import { useContext } from "react";
-import { AuthContext } from "./context/AppContext";
+import { AppContext } from "./context/AppContext";
 import { jwtDecode } from "jwt-decode";
 
 function App() {
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated } = useContext(AppContext);
 
   const token = localStorage.getItem("token");
   let isAdmin = false;
