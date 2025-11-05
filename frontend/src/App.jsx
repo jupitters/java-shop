@@ -9,26 +9,38 @@ import NotFound from './pages/NotFound';
 import Profile from './pages/Profile';
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
+import { jwtDecode } from "jwt-decode";
 
 function App() {
   const { isAuthenticated } = useContext(AuthContext);
 
+  const token = localStorage.getItem("token");
+  let isAdmin = false;
+  if (token) {
+    try {
+      const decoded = jwtDecode(token);
+      isAdmin = decoded.roles && decoded.roles.includes("ROLE_ADMIN");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <>
-      {/* Navbar só aparece se o usuário estiver autenticado */}
       {isAuthenticated && <Navbar />}
 
       <Routes>
-        {/* Rotas públicas */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* Rotas protegidas */}
         {isAuthenticated ? (
           <>
             <Route path="/" element={<Home />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/profile" element={<Profile />} />
+
+            {isAdmin && <Route path="/add-product" element={<AddProduct />} />}
+
             <Route path="*" element={<NotFound />} />
           </>
         ) : (
