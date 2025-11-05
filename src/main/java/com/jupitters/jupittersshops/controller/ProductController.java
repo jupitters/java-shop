@@ -21,6 +21,7 @@ import static org.springframework.http.HttpStatus.*;
 
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("${api.prefix}/products")
 public class ProductController {
     private final IProductService productService;
