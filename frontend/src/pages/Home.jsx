@@ -6,7 +6,7 @@ import { AppContext } from "../context/AppContext";
 const Home = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  const { user, fetchUser } = useContext(AppContext)
+  const { user, fetchUser, logout } = useContext(AppContext)
 
   useEffect(()=>{
     fetchUser(token)
@@ -18,7 +18,7 @@ const Home = () => {
         <>
           <h2>Bem-vindo, {user.firstName}!</h2>
           <p>Email: {user.email}</p>
-          <Button variant="secondary" onClick={() => navigate("/")}>
+          <Button variant="secondary" onClick={logout}>
             Sair
           </Button>
         </>
