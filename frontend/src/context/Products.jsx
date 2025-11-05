@@ -23,7 +23,7 @@ const Products = () => {
           return (
           <article key={ singleProduct.id } className="single-product">
             <img src={ singleProduct.images[0] } className="img" onClick={() => selectProduct(singleProduct.id)} />
-            <footer style={{display: "flex", justifyContent: "space-between"}}>
+            <footer>
               <h5>{singleProduct.name} - { singleProduct.brand }</h5>
               <button className="like-btn" onClick={() => addToFavorites(singleProduct.id)}>Add</button>
             </footer>
