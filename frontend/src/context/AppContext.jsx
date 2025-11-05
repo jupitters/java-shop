@@ -41,8 +41,10 @@ export const AppProvider = ({ children }) => {
   const fetchProducts = async () => {
     setLoading(true)
       try{
-        const { data } = axios.get("http://localhost/api/v1/products/all");
-        if (data.data) setProducts(data.data);
+        const { data } = await axios.get("http://localhost/api/v1/products/all");
+        if (data.data) {
+          setProducts(data.data)
+        }
       } catch (error) {
         console.log(error);
       }
