@@ -6,21 +6,18 @@ import { AppContext } from "../context/AppContext";
 const Home = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  const { user, fetchUser, logout } = useContext(AppContext)
+  const { user, fetchUser } = useContext(AppContext)
 
   useEffect(()=>{
     fetchUser(token)
   }, [])
 
   return (
-    <Container className="mt-5">
+    <div className="p-3">
       {user ? (
         <>
-          <h2>Bem-vindo, {user.firstName}!</h2>
+          <h5>Bem-vindo, {user.firstName}!</h5>
           <p>Email: {user.email}</p>
-          <Button variant="secondary" onClick={logout}>
-            Sair
-          </Button>
         </>
       ) : (
         <>
@@ -30,7 +27,7 @@ const Home = () => {
           </Button>
         </>
       )}
-    </Container>
+    </div>
   );
 };
 
