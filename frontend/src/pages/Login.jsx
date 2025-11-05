@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Form, Button, Container } from "react-bootstrap";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 const Login = () => {
     const navigate = useNavigate();
+    const { login } = useContext(AuthContext);
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -14,11 +16,9 @@ const Login = () => {
     
     try{
         const response = await axios.post("http://localhost:9191/api/v1/auth/login", {email: email, password: senha,} )
-        const token = response.data.data.token;
-        const userId = response.data.data.userId;
+        const { token, userId } = response.data.data;
         
-        localStorage.setItem("token", token);
-        localStorage.setItem("userId", userId);
+        login(token, userId)
 
         navigate("/", { replace: true });
     } catch (error) {

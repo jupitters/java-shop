@@ -7,11 +7,11 @@ import Cart from './pages/Cart';
 import Register from './pages/Register';
 import NotFound from './pages/NotFound';
 import Profile from './pages/Profile';
+import { useContext } from "react";
+import { AuthContext } from "./context/AuthContext";
 
 function App() {
-  // Aqui você poderia pegar o token do localStorage, por exemplo:
-  // const isAuthenticated = !!localStorage.getItem("token");
-  const isAuthenticated = true; // só para exemplo
+  const { isAuthenticated } = useContext(AuthContext);
 
   return (
     <>
