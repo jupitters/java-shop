@@ -1,18 +1,22 @@
-import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button, Container } from "react-bootstrap";
+import { AppContext } from "../context/AppContext";
 
 const Home = () => {
-  const location = useLocation();
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  const { user, fetchUser } = useContext(AppContext)
 
-  const user = location.state?.user;
+  useEffect(()=>{
+    fetchUser(token)
+  }, [])
 
   return (
     <Container className="mt-5">
       {user ? (
         <>
-          <h2>Bem-vindo, {user.name}!</h2>
+          <h2>Bem-vindo, {user.firstName}!</h2>
           <p>Email: {user.email}</p>
           <Button variant="secondary" onClick={() => navigate("/")}>
             Sair

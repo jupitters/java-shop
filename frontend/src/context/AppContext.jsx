@@ -1,5 +1,6 @@
 import { createContext, useState } from "react";
 import axios from 'axios';
+import { jwtDecode } from "jwt-decode";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const AppContext = createContext();
@@ -20,8 +21,14 @@ export const AppProvider = ({ children }) => {
     setIsAuthenticated(false);
   };
 
-  const fetchUser = async (userId) => {
+  const fetchUser = async (token) => {
+    let userId = "";
     try{
+      if(token) {
+        const decoded = jwtDecode(token);
+        userId = decoded.id;
+      }
+
       const { data } = await axios.get(`http://localhost:9191/api/v1/user/${userId}`);
       setUser(data.data);
     } catch (error) {
