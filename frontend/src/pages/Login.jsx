@@ -2,11 +2,11 @@ import React, { useState, useContext } from "react";
 import { Form, Button, Container } from "react-bootstrap";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import { AppContext } from "../context/AppContext";
 
 const Login = () => {
     const navigate = useNavigate();
-    const { login } = useContext(AuthContext);
+    const { login } = useContext(AppContext);
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
