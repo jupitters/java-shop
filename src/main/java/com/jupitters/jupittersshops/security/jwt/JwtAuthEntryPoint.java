@@ -16,7 +16,9 @@ import java.util.Map;
 @Component
 public class JwtAuthEntryPoint implements AuthenticationEntryPoint {
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
