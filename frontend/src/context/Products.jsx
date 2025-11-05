@@ -25,7 +25,7 @@ const Products = () => {
             <img src={ singleProduct.images[0] } className="img" onClick={() => selectProduct(singleProduct.id)} />
             <footer>
               <h5>{singleProduct.name} - { singleProduct.brand }</h5>
-              <button className="like-btn" onClick={() => addToFavorites(singleProduct.id)}>Add to Cart</button>
+              <button className="like-btn" onClick={() => addToFavorites(singleProduct.id)}>Add</button>
             </footer>
           </article>
           )
