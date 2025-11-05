@@ -41,7 +41,7 @@ export const AppProvider = ({ children }) => {
   const fetchProducts = async () => {
     setLoading(true)
       try{
-        const { data } = await axios.get("http://localhost/api/v1/products/all");
+        const { data } = await axios.get("http://localhost:9191/api/v1/products/all");
         if (data.data) {
           setProducts(data.data)
         }
