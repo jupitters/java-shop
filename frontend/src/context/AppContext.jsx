@@ -6,6 +6,7 @@ import { jwtDecode } from "jwt-decode";
 export const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
+  const apiUrl = "http://localhost:9191/api/v1"
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("token"));
   const [loading, setLoading] = useState(false)
   const [user, setUser] = useState("")
@@ -31,7 +32,7 @@ export const AppProvider = ({ children }) => {
         userId = decoded.id;
       }
 
-      const { data } = await axios.get(`http://localhost:9191/api/v1/users/user/${userId}`);
+      const { data } = await axios.get(`${apiUrl}/users/user/${userId}`);
       setUser(data.data);
     } catch (error) {
       console.log(error)
@@ -41,7 +42,7 @@ export const AppProvider = ({ children }) => {
   const fetchProducts = async () => {
     setLoading(true)
       try{
-        const { data } = await axios.get("http://localhost:9191/api/v1/products/all");
+        const { data } = await axios.get(`${apiUrl}/products/all`);
         if (data.data) {
           setProducts(data.data)
         }
@@ -51,12 +52,24 @@ export const AppProvider = ({ children }) => {
     setLoading(false)
   }
 
+  const addToCart = async (id, token) => {
+    try{
+      await axios.post(`${apiUrl}/cartItems/item/add?itemId=${id}&quantity=1`, null, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     fetchProducts()
   }, [])
 
   return (
-    <AppContext.Provider value={{ isAuthenticated, login, logout,fetchUser, user, products, loading }}>
+    <AppContext.Provider value={{ isAuthenticated, login, logout,fetchUser, user, products, loading, addToCart }}>
       {children}
     </AppContext.Provider>
   );
