@@ -2,7 +2,8 @@ import { useContext } from "react"
 import { AppContext } from "../context/AppContext"
 
 const CartItems = () => {
- const { cart, loading } = useContext(AppContext)
+ const { user, cart, loading, sendCart } = useContext(AppContext)
+
       if (loading) {
           return <section className='section'>
                   <h4>Loading...</h4>
@@ -16,7 +17,7 @@ const CartItems = () => {
   
     return (
         <>
-          <button style={{marginLeft: "2rem"}} className="like-btn" onClick={() => addToCart(singleProduct.id, token)}>Buy cart!</button>
+          <button style={{marginLeft: "2rem"}} className="like-btn" onClick={() => sendCart(user.id)}>Send cart!</button>
       <section className="section-center">
         {
           cart.items.map((singleProduct) => {
