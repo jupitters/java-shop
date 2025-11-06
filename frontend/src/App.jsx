@@ -14,7 +14,7 @@ import { AppContext } from "./context/AppContext";
 import { jwtDecode } from "jwt-decode";
 
 function App() {
-  const { isAuthenticated, showModal } = useContext(AppContext);
+  const { isAuthenticated } = useContext(AppContext);
 
   const token = localStorage.getItem("token");
   let isAdmin = false;
