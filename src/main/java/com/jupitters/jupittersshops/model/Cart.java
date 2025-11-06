@@ -1,5 +1,6 @@
 package com.jupitters.jupittersshops.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +10,8 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Getter
 @Setter
@@ -25,6 +28,7 @@ public class Cart {
     private Set<CartItem> items = new HashSet<>();
 
     @OneToOne
+    @JsonIgnore
     @JoinColumn(name = "user_id")
     private User user;
 
