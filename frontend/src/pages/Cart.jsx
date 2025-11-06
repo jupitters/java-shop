@@ -6,7 +6,13 @@ import CartItems from '../components/CartItems'
 import { Modal } from 'react-bootstrap'
 
 const Cart = () => {
-  const { showModal } = useContext(AppContext)
+  const { showModal, fetchUser } = useContext(AppContext)
+  const token = localStorage.getItem("token")
+
+  useEffect(()=>{
+      fetchUser(token)
+    }, [])
+  
 
   return (
     <div>

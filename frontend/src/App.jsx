@@ -12,6 +12,7 @@ import AddProduct from './pages/AddProduct';
 import { useContext } from "react";
 import { AppContext } from "./context/AppContext";
 import { jwtDecode } from "jwt-decode";
+import { Modal } from 'react-bootstrap';
 
 function App() {
   const { isAuthenticated } = useContext(AppContext);
