@@ -3,9 +3,8 @@ import Navbar from '../components/Navbar'
 import { AppContext } from '../context/AppContext'
 
 const Cart = () => {
-  const { cart} = useContext(AppContext)
+  const { cart } = useContext(AppContext)
 
-  // console.log(cart)
   return (
     <div>
       oi
