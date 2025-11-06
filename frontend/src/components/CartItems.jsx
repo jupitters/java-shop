@@ -3,7 +3,6 @@ import { AppContext } from "../context/AppContext"
 
 const CartItems = () => {
  const { cart, loading } = useContext(AppContext)
- console.log(cart.items)
       if (loading) {
           return <section className='section'>
                   <h4>Loading...</h4>
@@ -16,6 +15,8 @@ const CartItems = () => {
       }
   
     return (
+        <>
+          <button style={{marginLeft: "2rem"}} className="like-btn" onClick={() => addToCart(singleProduct.id, token)}>Buy cart!</button>
       <section className="section-center">
         {
           cart.items.map((singleProduct) => {
@@ -24,7 +25,7 @@ const CartItems = () => {
               <img src={ singleProduct.product.images[0] } className="img" />
               <footer>
                 <h5>{singleProduct.product.name} - { singleProduct.product.brand }</h5>
-                <p>{singleProduct.quantity}</p>
+                <button className="like-btn">x{singleProduct.quantity}</button>
               </footer>
             </article>
             )
@@ -32,6 +33,7 @@ const CartItems = () => {
         }
         
       </section>
+      </>
     )
 }
 
