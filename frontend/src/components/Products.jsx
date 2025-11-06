@@ -3,7 +3,7 @@ import { AppContext } from '../context/AppContext'
 import { Modal } from 'react-bootstrap'
 
 const Products = () => {
-    const { products, loading, addToCart, selectProduct, showModal } = useContext(AppContext)
+    const { products, loading, addToCart, selectProduct } = useContext(AppContext)
     const token = localStorage.getItem("token")
 
     if (loading) {
