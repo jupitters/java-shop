@@ -3,11 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { Button, Container } from "react-bootstrap";
 import { AppContext } from "../context/AppContext";
 import Products from "../components/Products";
+import Modal from "../components/Modal";
 
 const Home = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  const { user, fetchUser } = useContext(AppContext)
+  const { user, fetchUser, showModal } = useContext(AppContext)
 
   useEffect(()=>{
     fetchUser(token)
@@ -30,6 +31,7 @@ const Home = () => {
       )}
 
       <Products />
+      {showModal && <Modal />}
     </div>
   );
 };
