@@ -1,8 +1,9 @@
 import React from 'react'
+import AddProductForm from '../components/AddProductForm'
 
 const AddProduct = () => {
   return (
-    <div>AddProduct</div>
+    <AddProductForm />
   )
 }
 
