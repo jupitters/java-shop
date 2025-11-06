@@ -64,7 +64,6 @@ export const AppProvider = ({ children }) => {
             Authorization: `Bearer ${token}` 
           }
         })
-        console.log(data.data)
         setCart(data.data)
       } catch (error) {
         console.log(error)

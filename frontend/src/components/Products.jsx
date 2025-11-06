@@ -6,7 +6,6 @@ import { useLocation } from 'react-router-dom'
 const Products = () => {
     const { products, loading, addToCart, selectProduct } = useContext(AppContext)
     const token = localStorage.getItem("token")
-    const location = useLocation()
 
     if (loading) {
         return <section className='section'>
