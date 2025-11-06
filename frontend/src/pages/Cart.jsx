@@ -3,12 +3,17 @@ import Navbar from '../components/Navbar'
 import { AppContext } from '../context/AppContext'
 import Products from '../components/Products'
 import CartItems from '../components/CartItems'
+import { Modal } from 'react-bootstrap'
 
 const Cart = () => {
-  const { cart } = useContext(AppContext)
+  const { showModal } = useContext(AppContext)
 
   return (
-    <CartItems />
+    <div>
+      <CartItems />
+      {showModal && <Modal />}
+    </div>
+    
   )
 }
 
