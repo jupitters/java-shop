@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Container } from "react-bootstrap";
 import { AppContext } from "../context/AppContext";
-import Products from "../context/Products";
+import Products from "../components/Products";
 
 const Home = () => {
   const navigate = useNavigate();

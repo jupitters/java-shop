@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { AppContext } from './AppContext'
+import { AppContext } from '../context/AppContext'
 
 const Products = () => {
     const { products, loading, addToCart } = useContext(AppContext)
