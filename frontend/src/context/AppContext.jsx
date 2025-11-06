@@ -94,6 +94,14 @@ export const AppProvider = ({ children }) => {
     setShowModal(false)
   }
 
+  const sendCart = async () => {
+    try{
+      await axios.post(`${apiUrl}/orders/order/${user.id}`)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     fetchProducts()
     fetchUser(token)
@@ -106,7 +114,7 @@ export const AppProvider = ({ children }) => {
   }, [user])
 
   return (
-    <AppContext.Provider value={{ isAuthenticated, login, logout,fetchUser, user, products, loading, addToCart, showModal, selectProduct, selectedProduct, closeModal, fetchCart, cart }}>
+    <AppContext.Provider value={{ isAuthenticated, login, logout,fetchUser, user, products, loading, addToCart, showModal, selectProduct, selectedProduct, closeModal, fetchCart, cart, sendCart }}>
       {children}
     </AppContext.Provider>
   );
