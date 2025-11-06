@@ -1,8 +1,9 @@
 import React, { useContext } from 'react'
 import { AppContext } from '../context/AppContext'
+import { Modal } from 'react-bootstrap'
 
 const Products = () => {
-    const { products, loading, addToCart } = useContext(AppContext)
+    const { products, loading, addToCart, selectProduct, showModal } = useContext(AppContext)
     const token = localStorage.getItem("token")
 
     if (loading) {
@@ -20,7 +21,6 @@ const Products = () => {
     <section className="section-center">
       {
         products.map((singleProduct) => {
-            console.log(singleProduct)
           return (
           <article key={ singleProduct.id } className="single-product">
             <img src={ singleProduct.images[0] } className="img" onClick={() => selectProduct(singleProduct.id)} />
@@ -32,6 +32,7 @@ const Products = () => {
           )
         })
       }
+      
     </section>
   )
 }

@@ -11,6 +11,8 @@ export const AppProvider = ({ children }) => {
   const [loading, setLoading] = useState(false)
   const [user, setUser] = useState("")
   const [products, setProducts] = useState([])
+  const [selectedProduct, setSelectedProduct] = useState(null)
+  const [showModal, setShowModal] = useState(false)
 
   const login = (token, userId) => {
     localStorage.setItem("token", token);
@@ -64,12 +66,22 @@ export const AppProvider = ({ children }) => {
     }
   }
 
+  const selectProduct = (idProduct) => {
+    const product = products.find((product) => product.id === idProduct)
+    setSelectedProduct(product)
+    setShowModal(true)
+  }
+
+  const closeModal = () => {
+    setShowModal(false)
+  }
+
   useEffect(() => {
     fetchProducts()
   }, [])
 
   return (
-    <AppContext.Provider value={{ isAuthenticated, login, logout,fetchUser, user, products, loading, addToCart }}>
+    <AppContext.Provider value={{ isAuthenticated, login, logout,fetchUser, user, products, loading, addToCart, showModal, selectProduct, selectedProduct, closeModal }}>
       {children}
     </AppContext.Provider>
   );
