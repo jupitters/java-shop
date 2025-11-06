@@ -1,7 +1,5 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { AppContext } from '../context/AppContext'
-import { Modal } from 'react-bootstrap'
-import { useLocation } from 'react-router-dom'
 
 const Products = () => {
     const { products, loading, addToCart, selectProduct } = useContext(AppContext)

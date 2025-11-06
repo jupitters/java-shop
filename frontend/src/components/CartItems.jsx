@@ -20,11 +20,11 @@ const CartItems = () => {
         {
           cart.items.map((singleProduct) => {
             return (
-            <article key={ singleProduct.id } className="single-product">
-              <img src={ singleProduct.product.images[0] } className="img" onClick={() => selectProduct(singleProduct.id)} />
+            <article key={ singleProduct.product.id } className="single-product">
+              <img src={ singleProduct.product.images[0] } className="img" onClick={() => selectProduct(singleProduct.product.id)} />
               <footer>
-                <h5>{singleProduct.name} - { singleProduct.brand }</h5>
-
+                <h5>{singleProduct.product.name} - { singleProduct.product.brand }</h5>
+                <p>{singleProduct.quantity}</p>
               </footer>
             </article>
             )
