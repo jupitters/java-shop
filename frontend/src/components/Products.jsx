@@ -28,9 +28,7 @@ const Products = () => {
             <img src={ singleProduct.images[0] } className="img" onClick={() => selectProduct(singleProduct.id)} />
             <footer>
               <h5>{singleProduct.name} - { singleProduct.brand }</h5>
-              { location.pathname === "/" && (
                 <button className="like-btn" onClick={() => addToCart(singleProduct.id, token)}>Add to  Cart</button>
-              )}
             </footer>
           </article>
           )
