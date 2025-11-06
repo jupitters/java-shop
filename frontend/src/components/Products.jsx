@@ -1,10 +1,12 @@
 import React, { useContext } from 'react'
 import { AppContext } from '../context/AppContext'
 import { Modal } from 'react-bootstrap'
+import { useLocation } from 'react-router-dom'
 
 const Products = () => {
     const { products, loading, addToCart, selectProduct } = useContext(AppContext)
     const token = localStorage.getItem("token")
+    const location = useLocation()
 
     if (loading) {
         return <section className='section'>
@@ -26,7 +28,9 @@ const Products = () => {
             <img src={ singleProduct.images[0] } className="img" onClick={() => selectProduct(singleProduct.id)} />
             <footer>
               <h5>{singleProduct.name} - { singleProduct.brand }</h5>
-              <button className="like-btn" onClick={() => addToCart(singleProduct.id, token)}>Add to Cart</button>
+              { location.pathname === "/" && (
+                <button className="like-btn" onClick={() => addToCart(singleProduct.id, token)}>Add to  Cart</button>
+              )}
             </footer>
           </article>
           )
