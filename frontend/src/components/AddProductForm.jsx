@@ -18,13 +18,11 @@ const AddProductForm = () => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Atualiza campos de texto
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Atualiza arquivos selecionados
   const handleFileChange = (e) => {
     setFiles(e.target.files);
   };
@@ -35,7 +33,6 @@ const AddProductForm = () => {
     setMessage("");
 
     try {
-      // 1️⃣ Cria o produto
       const { data } = await axios.post(productUrl, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -43,10 +40,9 @@ const AddProductForm = () => {
         },
       });
 
-      const productId = data.data.id; // pega o ID retornado
-      setMessage("✅ Produto criado! Agora enviando imagens...");
+      const productId = data.data.id;
+      setMessage("Produto criado! Agora enviando imagens...");
 
-      // 2️⃣ Envia as imagens, se houver
       if (files.length > 0) {
         const imageFormData = new FormData();
         for (let i = 0; i < files.length; i++) {
@@ -60,12 +56,11 @@ const AddProductForm = () => {
             "Content-Type": "multipart/form-data",
           },
         });
-        setMessage("✅ Produto e imagens adicionados com sucesso!");
+        setMessage("Produto e imagens adicionados com sucesso!");
       } else {
-        setMessage("✅ Produto adicionado (sem imagens).");
+        setMessage("Produto adicionado (sem imagens).");
       }
 
-      // Limpa o formulário
       setFormData({
         name: "",
         brand: "",
@@ -77,7 +72,7 @@ const AddProductForm = () => {
       setFiles([]);
     } catch (error) {
       console.error(error);
-      setMessage("❌ Erro ao adicionar produto ou imagens.");
+      setMessage("Erro ao adicionar produto ou imagens.");
     } finally {
       setLoading(false);
     }
