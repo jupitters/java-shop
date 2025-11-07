@@ -80,6 +80,7 @@ const Register = () => {
       </form>
 
       {message && <p style={styles.message}>{message}</p>}
+      <p className="mt-4">Voltar a tela de <a href="/login">login.</a></p>
     </div>
   );
 };
