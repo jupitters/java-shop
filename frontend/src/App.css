@@ -281,7 +281,7 @@ ul {
 .close-icon {
   position: absolute;
   top: 1rem;
-  right: 1rem; /* <-- posição correta */
+  right: 1rem; 
   width: 2rem;
   height: 2rem;
   z-index: 100;
