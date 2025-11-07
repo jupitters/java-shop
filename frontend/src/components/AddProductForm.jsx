@@ -80,7 +80,7 @@ const AddProductForm = () => {
 
   return (
     <section style={styles.container}>
-      <h2>Adicionar Novo Produto com Imagem</h2>
+      <h2>Adicionar Novo Produto</h2>
 
       <form onSubmit={handleSubmit} style={styles.form}>
         <input
