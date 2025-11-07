@@ -3,13 +3,14 @@ import { AppContext } from "../context/AppContext"
 
 const CartItems = () => {
  const { user, cart, loading, sendCart } = useContext(AppContext)
+ const apiUrl = "http://localhost:9191"
 
       if (loading) {
           return <section className='section'>
                   <h4>Loading...</h4>
               </section>
       }
-      if (cart.items.length < 1) {
+      if (!cart || !cart.items || cart.items.length < 1) {
           return <section className="section">
           <h4>No items in cart.</h4>
           </section>
@@ -23,7 +24,7 @@ const CartItems = () => {
           cart.items.map((singleProduct) => {
             return (
             <article key={ singleProduct.product.id } className="single-product">
-              <img src={ singleProduct.product.images[0] } className="img" />
+              <img src={ singleProduct.product.images.length === 0? null : apiUrl + singleProduct.product.images[0].downloadUrl } className="img" />
               <footer>
                 <h5>{singleProduct.product.name} - { singleProduct.product.brand }</h5>
                 <button className="like-btn">x{singleProduct.quantity}</button>

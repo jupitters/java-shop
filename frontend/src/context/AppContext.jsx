@@ -14,7 +14,7 @@ export const AppProvider = ({ children }) => {
   const [products, setProducts] = useState([])
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [showModal, setShowModal] = useState(false)
-  const [cart, setCart] = useState([])
+  const [cart, setCart] = useState( {items: [] })
 
   const login = (token, userId) => {
     localStorage.setItem("token", token);
@@ -40,6 +40,7 @@ export const AppProvider = ({ children }) => {
       setUser(data.data);
     } catch (error) {
       console.log(error)
+      setCart({ items: []})
     }
   }
 
@@ -116,7 +117,7 @@ export const AppProvider = ({ children }) => {
   }, [user])
 
   return (
-    <AppContext.Provider value={{ isAuthenticated, login, logout,fetchUser, user, products, loading, addToCart, showModal, selectProduct, selectedProduct, closeModal, fetchCart, cart, sendCart }}>
+    <AppContext.Provider value={{ isAuthenticated, login, logout,fetchUser, user, products, loading, addToCart, showModal, selectProduct, selectedProduct, closeModal, fetchCart, cart, sendCart, apiUrl }}>
       {children}
     </AppContext.Provider>
   );
