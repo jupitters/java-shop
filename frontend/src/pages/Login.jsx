@@ -56,7 +56,7 @@ const Login = () => {
           Entrar
         </Button>
       </Form>
-      <p className="mt-3">Não possui cadastro? Registre-se <a href="/register">aqui!</a></p>
+      <p style={{textAlign: "center"}} className="mt-3">Não possui cadastro? Registre-se <a href="/register">aqui!</a></p>
     </Container>
   );
 };
