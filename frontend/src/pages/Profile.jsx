@@ -1,25 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import { AppContext } from "../context/AppContext";
 
 const Profile = ({ userId }) => {
-  const [user, setUser] = useState(null);
+  const { user } = useContext(AppContext);
   const [editing, setEditing] = useState(false);
   const [updatedUser, setUpdatedUser] = useState({});
   const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    fetchUser();
-  }, []);
-
-  const fetchUser = async () => {
-    try {
-      const res = await axios.get(`http://localhost:9191/api/v1/users/user/${userId}`);
-      setUser(res.data.data);
-      setUpdatedUser(res.data.data);
-    } catch (err) {
-      setMessage("Erro ao carregar perfil: ", err);
-    }
-  };
 
   const handleChange = (e) => {
     setUpdatedUser({ ...updatedUser, [e.target.name]: e.target.value });
@@ -31,7 +18,6 @@ const Profile = ({ userId }) => {
         `http://localhost:9191/api/v1/users/user/${userId}`,
         updatedUser
       );
-      setUser(res.data.data);
       setEditing(false);
       setMessage("Perfil atualizado!");
     } catch (err) {
@@ -44,7 +30,6 @@ const Profile = ({ userId }) => {
     try {
       await axios.delete(`http://localhost:9191/api/v1/users/user/${userId}`);
       setMessage("Conta excluída com sucesso!");
-      setUser(null);
     } catch (err) {
       setMessage("Erro ao excluir conta: ", err);
     }
