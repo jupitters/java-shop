@@ -3,11 +3,13 @@ import { AppContext } from '../context/AppContext'
 
 const Modal = () => {
     const { selectedProduct, closeModal } = useContext(AppContext)
+    const apiUrl = "http://localhost:9191"
+
   return (
     <aside className="modal-overlay">
       <div className="modal-container">
         <p className="close-icon" onClick={closeModal}>X</p>
-        <img src={selectedProduct.images[0]} className="img modal-img" />
+        <img src={ apiUrl + selectedProduct.images[0].downloadUrl } className="img modal-img" />
         <div className="modal-content">
           <h4>{selectedProduct.name}</h4>
           <p>Description:</p>
