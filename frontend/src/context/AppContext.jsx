@@ -105,16 +105,7 @@ export const AppProvider = ({ children }) => {
     }
   }
 
-  useEffect(() => {
-    fetchProducts()
-    fetchUser(token)
-  }, [token])
-
-  useEffect(() => {
-    if(user && user.cart){
-      fetchCart(user.cart.cartId, token)
-    }
-  }, [user])
+  
 
   return (
     <AppContext.Provider value={{ isAuthenticated, login, logout,fetchUser, user, products, loading, addToCart, showModal, selectProduct, selectedProduct, closeModal, fetchCart, cart, sendCart, apiUrl }}>
