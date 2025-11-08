@@ -95,15 +95,7 @@ export const AppProvider = ({ children }) => {
     setShowModal(false)
   }
 
-  const sendCart = async (id) => {
-    try{
-      await axios.post(`${apiUrl}/orders/order?userId=${id}`)
-      setCart({items: []})
-      alert("Pedido enviado!")
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  
 
   useEffect(() => {
     fetchProducts()
