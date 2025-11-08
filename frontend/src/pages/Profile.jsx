@@ -8,9 +8,7 @@ const Profile = ({ userId }) => {
   const [updatedUser, setUpdatedUser] = useState({});
   const [message, setMessage] = useState("");
 
-  const handleChange = (e) => {
-    setUpdatedUser({ ...updatedUser, [e.target.name]: e.target.value });
-  };
+  
 
   const handleUpdate = async () => {
     try {
