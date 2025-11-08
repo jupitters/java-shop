@@ -17,22 +17,7 @@ const Register = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setMessage("");
-
-    try {
-      const response = await axios.post(apiUrl, formData);
-      setMessage(response.data.response || "Usuário registrado com sucesso!");
-      setFormData({ firstName: "", lastName: "", email: "", password: "" });
-    } catch (error) {
-      if (error.response) {
-        setMessage(error.response.data.response || "Erro ao registrar usuário.");
-      } else {
-        setMessage("Erro de conexão com o servidor.");
-      }
-    }
-  };
+  
 
   return (
     <div style={styles.container}>
