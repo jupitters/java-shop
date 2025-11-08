@@ -12,7 +12,18 @@ const Profile = ({ userId }) => {
     setUpdatedUser({ ...updatedUser, [e.target.name]: e.target.value });
   };
 
-  
+  const handleUpdate = async () => {
+    try {
+      const res = await axios.put(
+        `http://localhost:9191/api/v1/users/user/${userId}`,
+        updatedUser
+      );
+      setEditing(false);
+      setMessage("Perfil atualizado!");
+    } catch (err) {
+      setMessage("Erro ao atualizar perfil: ", err);
+    }
+  };
 
   const handleDelete = async () => {
     if (!window.confirm("Tem certeza que deseja excluir sua conta?")) return;
