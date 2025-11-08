@@ -41,7 +41,26 @@ const Profile = ({ userId }) => {
     <div style={styles.container}>
       <h2>Perfil de {user.firstName} {user.lastName}</h2>
 
-      
+      {editing ? (
+        <div style={styles.form}>
+          <input name="firstName" value={updatedUser.firstName} onChange={handleChange} />
+          <input name="lastName" value={updatedUser.lastName} onChange={handleChange} />
+          <input name="email" value={updatedUser.email} onChange={handleChange} />
+          <input name="address" value={updatedUser.address || ""} onChange={handleChange} />
+          <button onClick={handleUpdate}>Salvar</button>
+          <button onClick={() => setEditing(false)}>Cancelar</button>
+        </div>
+      ) : (
+        <>
+          <p><strong>Email:</strong> {user.email}</p>
+          <p><strong>Endereço:</strong> {user.address || "Não informado"}</p>
+
+          <button onClick={() => setEditing(true)}>Editar</button>
+          <button onClick={handleDelete} style={styles.deleteBtn}>Excluir Conta</button>
+        </>
+      )}
+
+      {message && <p style={{ color: "green" }}>{message}</p>}
     </div>
   );
 };
