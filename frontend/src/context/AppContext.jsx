@@ -57,7 +57,20 @@ export const AppProvider = ({ children }) => {
     setLoading(false)
   }
 
-  
+  const fetchCart = async (cartId, token) => {
+    setLoading(true)
+      try{
+        const { data } = await axios.get(`${apiUrl}/carts/id/${cartId}`, {
+          headers: {
+            Authorization: `Bearer ${token}` 
+          }
+        })
+        setCart(data.data)
+      } catch (error) {
+        console.log(error)
+      }
+    setLoading(false)
+  }
 
   const addToCart = async (id, token) => {
     try{
