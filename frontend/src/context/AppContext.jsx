@@ -16,11 +16,7 @@ export const AppProvider = ({ children }) => {
   const [showModal, setShowModal] = useState(false)
   const [cart, setCart] = useState( {items: [] })
 
-  const login = (token, userId) => {
-    localStorage.setItem("token", token);
-    localStorage.setItem("userId", userId);
-    setIsAuthenticated(true);
-  };
+  
 
   const logout = () => {
     localStorage.removeItem("token");
