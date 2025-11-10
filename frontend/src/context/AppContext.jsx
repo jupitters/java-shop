@@ -72,7 +72,17 @@ export const AppProvider = ({ children }) => {
     setLoading(false)
   }
 
-  
+  const addToCart = async (id, token) => {
+    try{
+      await axios.post(`${apiUrl}/cartItems/item/add?itemId=${id}&quantity=1`, null, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const selectProduct = (idProduct) => {
     const product = products.find((product) => product.id === idProduct)
