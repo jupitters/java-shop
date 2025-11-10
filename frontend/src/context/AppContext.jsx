@@ -84,16 +84,7 @@ export const AppProvider = ({ children }) => {
     }
   }
 
-  const selectProduct = (idProduct) => {
-    const product = products.find((product) => product.id === idProduct)
-
-    setSelectedProduct(product)
-    setShowModal(true)
-  }
-
-  const closeModal = () => {
-    setShowModal(false)
-  }
+  
 
   const sendCart = async (id) => {
     try{
