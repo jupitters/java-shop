@@ -48,11 +48,11 @@ const Profile = () => {
 
       {editing ? (
         <div style={styles.form}>
-          <input placeholder={user.firstName} name="firstName" value={updatedUser.firstName} onChange={handleChange} />
-          <input placeholder={user.lastName} name="lastName" value={updatedUser.lastName} onChange={handleChange} />
-          <input placeholder={user.email} name="email" value={updatedUser.email} onChange={handleChange} />
-          <input placeholder={user.address} name="address" value={updatedUser.address || ""} onChange={handleChange} />
-          <Button onClick={handleUpdate(user.id)}>Salvar</Button>
+          <input placeholder="First Name" name="firstName" value={updatedUser.firstName} onChange={handleChange} required/>
+          <input placeholder="Last Name" name="lastName" value={updatedUser.lastName} onChange={handleChange} required/>
+          <input placeholder="Email" name="email" value={updatedUser.email} onChange={handleChange} required/>
+          <input placeholder="Address" name="address" value={updatedUser.address || ""} onChange={handleChange} required/>
+          <Button onClick={() => handleUpdate(user.id)}>Salvar</Button>
           <Button onClick={() => setEditing(false)}>Cancelar</Button>
         </div>
       ) : (
