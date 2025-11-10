@@ -28,7 +28,21 @@ export const AppProvider = ({ children }) => {
     setIsAuthenticated(false);
   };
 
-  
+  const fetchUser = async (token) => {
+    let userId = "";
+    try{
+      if(token) {
+        const decoded = jwtDecode(token);
+        userId = decoded.id;
+      }
+
+      const { data } = await axios.get(`${apiUrl}/users/user/${userId}`);
+      setUser(data.data);
+    } catch (error) {
+      console.log(error)
+      setCart({ items: []})
+    }
+  }
 
   const fetchProducts = async () => {
     setLoading(true)
