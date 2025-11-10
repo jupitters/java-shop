@@ -7,6 +7,7 @@ const Register = () => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
+    address: "",
     email: "",
     password: ""
   });
@@ -24,7 +25,7 @@ const Register = () => {
     try {
       const response = await axios.post(apiUrl, formData);
       setMessage(response.data.response || "Usuário registrado com sucesso!");
-      setFormData({ firstName: "", lastName: "", email: "", password: "" });
+      setFormData({ firstName: "", lastName: "", address: "", email: "", password: "" });
     } catch (error) {
       if (error.response) {
         setMessage(error.response.data.response || "Erro ao registrar usuário.");
@@ -52,6 +53,15 @@ const Register = () => {
           name="lastName"
           placeholder="Sobrenome"
           value={formData.lastName}
+          onChange={handleChange}
+          required
+          style={styles.input}
+        />
+        <input
+          type="text"
+          name="address"
+          placeholder="Endereço"
+          value={formData.address}
           onChange={handleChange}
           required
           style={styles.input}
