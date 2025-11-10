@@ -22,7 +22,11 @@ export const AppProvider = ({ children }) => {
     setIsAuthenticated(true);
   };
 
-  
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    setIsAuthenticated(false);
+  };
 
   const fetchUser = async (token) => {
     let userId = "";
