@@ -26,7 +26,6 @@ const Profile = ({ userId }) => {
   };
 
   
-  if (!user) return <p>{message || "Carregando perfil..."}</p>;
 
   return (
     <div style={styles.container}>
