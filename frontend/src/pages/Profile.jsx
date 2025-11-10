@@ -25,7 +25,17 @@ const Profile = ({ userId }) => {
     }
   };
 
-  
+  const handleDelete = async () => {
+    if (!window.confirm("Tem certeza que deseja excluir sua conta?")) return;
+    try {
+      await axios.delete(`http://localhost:9191/api/v1/users/user/${userId}`);
+      setMessage("Conta excluída com sucesso!");
+    } catch (err) {
+      setMessage("Erro ao excluir conta: ", err);
+    }
+  };
+
+  if (!user) return <p>{message || "Carregando perfil..."}</p>;
 
   return (
     <div style={styles.container}>
