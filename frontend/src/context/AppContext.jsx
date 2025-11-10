@@ -44,18 +44,7 @@ export const AppProvider = ({ children }) => {
     }
   }
 
-  const fetchProducts = async () => {
-    setLoading(true)
-      try{
-        const { data } = await axios.get(`${apiUrl}/products/all`);
-        if (data.data) {
-          setProducts(data.data)
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    setLoading(false)
-  }
+  
 
   const fetchCart = async (cartId, token) => {
     setLoading(true)
