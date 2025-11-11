@@ -35,7 +35,17 @@ public class UserController {
         }
     }
 
-
+    @PostMapping("/user")
+    public ResponseEntity<ApiResponse> createUser(@RequestBody CreateUserRequest request) {
+        try {
+            User user = userService.createUser(request);
+            UserDto userDto = userService.convertUserToDto(user);
+            return ResponseEntity.ok(new ApiResponse("Created!", userDto));
+        } catch (AlreadyExistsException e) {
+            return ResponseEntity.status(CONFLICT)
+                    .body(new ApiResponse(e.getMessage(), null));
+        }
+    }
 
     @PutMapping("/user/{userId}")
     public ResponseEntity<ApiResponse> updateUser(@RequestBody UpdateUserRequest request, @PathVariable Long userId) {
