@@ -37,16 +37,7 @@ public class OrderController {
         }
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<ApiResponse> getAllOrders() {
-        try {
-            List<OrderDto> orders = orderService.getAllOrders();
-            return ResponseEntity.ok(new ApiResponse("Item Orders success!", orders));
-        } catch (Exception e) {
-            return ResponseEntity.status(INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse("Error occurred: ", e.getMessage()));
-        }
-    }
+
 
     @GetMapping("/id/{orderId}")
     public ResponseEntity<ApiResponse> getOrderById(@PathVariable Long orderId) {
