@@ -70,6 +70,16 @@ public class OrderController {
         }
     }
 
-
+    @PatchMapping("/order/{orderId}")
+    public ResponseEntity<ApiResponse> updateOrderStatus(@RequestBody UpdateOrderRequest request, @PathVariable Long orderId){
+        try {
+            Order order = orderService.updateOrderStatus(request.getStatus(), orderId);
+            OrderDto orderDto = orderService.convertToDto(order);
+            return ResponseEntity.ok(new ApiResponse("Order " + orderId + " marked as SHIPPED!", orderDto));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(NOT_FOUND)
+                    .body(new ApiResponse(e.getMessage(), null));
+        }
+    }
 
 }
