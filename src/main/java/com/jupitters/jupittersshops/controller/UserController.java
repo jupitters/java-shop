@@ -59,5 +59,14 @@ public class UserController {
         }
     }
 
-
+    @DeleteMapping("/user/{userId}")
+    public ResponseEntity<ApiResponse> deleteUser (@PathVariable Long userId){
+        try {
+            userService.deleteUser(userId);
+            return ResponseEntity.ok(new ApiResponse("Delete success!", null));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(NOT_FOUND)
+                    .body(new ApiResponse(e.getMessage(), null));
+        }
+    }
 }
