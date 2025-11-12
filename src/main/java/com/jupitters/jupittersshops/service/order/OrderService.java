@@ -74,12 +74,7 @@ public class OrderService implements IOrderService{
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    @Override
-    public List<OrderDto> getAllOrders(){
-        List<Order> orders = orderRepository.findAll();
-        return orders.stream()
-                .map(this :: convertToDto).toList();
-    }
+
 
     @Override
     public OrderDto getOrder(Long orderId) {
