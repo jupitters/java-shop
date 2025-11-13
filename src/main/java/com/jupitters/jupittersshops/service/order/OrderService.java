@@ -95,7 +95,15 @@ public class OrderService implements IOrderService{
                 .map(this :: convertToDto).toList();
     }
 
-
+    @Override
+    public Order updateOrderStatus(OrderStatus orderStatus, Long orderId) {
+        return orderRepository.findById(orderId)
+                .map((order) -> {
+                    order.setOrderStatus(orderStatus);
+                    return orderRepository.save(order);
+                })
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found"));
+    }
 
     @Override
     public OrderDto convertToDto(Order order) {
